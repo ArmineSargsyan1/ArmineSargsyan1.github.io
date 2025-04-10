@@ -1,0 +1,219 @@
+.product-details {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+
+  .product-header {
+    margin-bottom: 20px;
+
+    &_wrapper{
+      width: 250px;
+      background-color: #fdfdfd;
+      border-radius: 8px;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #555;
+      margin: 5px 0;
+    }
+  }
+
+  .product-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    .product-image {
+      max-width: 250px;
+      max-height: 250px;
+      object-fit: cover;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .product-info {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+
+    p {
+      font-size: 1.1rem;
+      margin: 8px 0;
+    }
+
+    p:first-of-type {
+      font-weight: bold;
+    }
+  }
+
+  .product-discount {
+    background-color: #fffbf2;
+    padding: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+
+    .original-price {
+      text-decoration: line-through;
+      color: #999;
+    }
+
+    .discounted-price {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #d9534f;
+      margin-left: 10px;
+    }
+
+    p {
+      font-size: 1rem;
+      margin: 8px 0;
+    }
+  }
+
+  .product-timestamps {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    p {
+      font-size: 1rem;
+      margin: 5px 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .product-details {
+    padding: 15px;
+  }
+
+  .product-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .product-info p {
+    font-size: 1rem;
+  }
+
+  .product-discount p {
+    font-size: 0.95rem;
+  }
+
+  .product-timestamps p {
+    font-size: 0.95rem;
+  }
+
+  .product-images {
+    justify-content: center;
+  }
+
+  .product-image {
+    max-width: 150px;
+    max-height: 150px;
+  }
+}
+
+
+.admin-discount-product {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  //padding: 20px;
+  max-width: 600px;
+  margin: 30px auto;
+  transition: all 0.3s ease;
+  min-height: 420px;
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    div {
+      //display: flex;
+      //flex-direction: column;
+      //gap: 8px;
+    }
+
+    label {
+      font-size: 1rem;
+      color: #333;
+      font-weight: 500;
+    }
+
+    input {
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.3s ease;
+
+      &:focus {
+        border-color: #4caf50;
+      }
+
+      &::placeholder {
+        color: #aaa;
+      }
+    }
+
+    .react-datepicker-wrapper {
+      display: block;
+      width: 100%;
+
+      .react-datepicker__input-container {
+        width: 100%;
+      }
+    }
+  }
+}
+.admin-discount-button{
+  padding: 12px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
+
+  &:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    background-color: #cfcfcf;
+    cursor: not-allowed;
+  }
+}
+

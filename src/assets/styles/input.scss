@@ -1,0 +1,48 @@
+@import "variables";
+
+.input {
+  width: 100%;
+  padding: 10px 15px;
+  outline: none;
+
+  &::placeholder {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 16.83px;
+      color: #767676;
+
+  }
+
+  &.error {
+    border: 1px solid red;
+  }
+
+  &__box {
+    position: relative;
+    font-size: 17px;
+    font-weight: 600;
+    color: #555555;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .error {
+    position: absolute;
+    font-size: 16px;
+    font-weight: 500;
+    color: red;
+  }
+
+
+}
+.eye__icon {
+  border: none;
+  background: transparent;
+  position: absolute;
+  right: 5px;
+  top: 60px;
+  cursor: pointer;
+  transform: translateY(-50%);
+  z-index: 10;
+  opacity: 50%;
+}

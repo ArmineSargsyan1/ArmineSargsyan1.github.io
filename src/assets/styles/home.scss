@@ -1,0 +1,93 @@
+@import "variables";
+
+.dashboard {
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f7f9fc;
+  color: #333;
+  //width: 200px;
+
+  .filters {
+    width: 200px;
+    gap: 1rem;
+    margin: 1rem 0;
+    position: fixed;
+    top: 450px;
+    left: 10px;
+
+    label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #444;
+      margin-top: 10px;
+
+      &:first-child{
+        margin-top: 0;
+      }
+
+    }
+  }
+
+  .summary {
+    margin-bottom: 2rem;
+    background: #fff;
+    max-width: 300px;
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    p {
+      font-size: 1rem;
+      margin: 0.3rem 0;
+      font-weight: 500;
+    }
+  }
+
+  .chart-container {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+  }
+
+  .buyers {
+    h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .buyers-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .buyer-card {
+      display: flex;
+      gap: 1rem;
+      background: #fff;
+      padding: 1rem;
+      max-width: 300px;
+      border-radius: 0.5rem;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+      .buyer-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 20%;
+        background: #ddd;
+        object-fit: cover;
+      }
+
+      .buyer-info {
+        font-size: 0.9rem;
+        line-height: 1;
+
+        strong {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+@import "variables";
+
+.button {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  text-decoration: none;
+  width: 100%;
+  //height: 60px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background:$interfaceColor;
+  text-transform: capitalize;
+  color: #ffffff;
+  padding: 10px;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  &.loading::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 25%;
+    left: 30%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: $interfaceColor;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  &:hover {
+    background-color: darken($interfaceColor, 8%);
+    color: #ffffff;
+  }
+
+
+  &:disabled {
+    background: gray;
+    color: #ffffff;
+  }
+}
+
+
+
+

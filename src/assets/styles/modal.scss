@@ -1,0 +1,79 @@
+@import "variables";
+
+.modal {
+  height: 100%;
+  width: 100%;
+  //overflow: hidden;
+  overflow: scroll;
+
+  z-index: 10000;
+  background: #171B2499;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  &__container {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
+
+  &__content {
+    position: relative;
+    top: 100px;
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 20px;
+    transition: 0.4s all;
+    //height: auto;
+    overflow: scroll;
+
+    &.small{
+      width: calc(100vw - 100px);
+      max-width: 380px;
+      min-height: 200px;
+      .close__button{
+        width: 25px;
+        height: 25px;
+      }
+
+    }
+
+    &.big{
+      width: calc(100vw - 150px);
+      max-width: 630px;
+      min-height: 300px;
+    }
+  }
+}
+
+.close__button {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  .close__modal {
+    width: 100%;
+    height: 100%;
+
+  }
+
+  .close__modal * {
+    transition: 0.1s;
+    fill: #d1d1d1;
+    stroke: #d1d1d1;
+  }
+}
+
+.close__button:hover .close__modal * {
+  fill: $interfaceColor;
+  stroke: $interfaceColor;
+}
