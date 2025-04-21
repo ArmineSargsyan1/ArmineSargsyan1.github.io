@@ -81,10 +81,10 @@ const DiscountProduct = ({ product }) => {
 
       </>
       }
-      <Modal onClose={onClose} isOpen={!_.isEmpty(discountPercentage)}>
+      <Modal onClose={onClose} isOpen={!_.isEmpty(discountPercentage)} className={"big"}>
       <div className="admin-discount-product">
         <form onSubmit={handleSubmit}>
-          <div>
+          <div style={{width: "37%", margin: "0 auto"}}>
             <label htmlFor="discountPercentage">Discount Percentage</label>
             <input
               type="number"
@@ -96,9 +96,8 @@ const DiscountProduct = ({ product }) => {
             />
           </div>
 
-          <div>
+          <div style={{margin: "0 auto"}}>
             <DatePiker
-              showIcon
               selected={startDate}
               startDate={startDate}
               endDate={endDate}

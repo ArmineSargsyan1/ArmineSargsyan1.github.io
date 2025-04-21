@@ -1,5 +1,4 @@
 import axios from "axios";
-import {loadUnreadNotifications, markNotificationAsRead} from "./component/store/actions/notification";
 
 export const api = axios.create({
   headers: {
@@ -196,11 +195,15 @@ static deleteImage({imageId}) {
   };
 
 
-  static async markNotificationAsRead({notificationId}) {
-    return await api.patch(`admin-notification/${notificationId}/read`,
-     null
+  static async markNotificationAsRead({ notificationId }) {
+
+    console.log(notificationId, "noy");
+
+    return await api.patch(
+      `admin-notification/${notificationId}/read`
     );
-  };
+  }
+
 
 
 }

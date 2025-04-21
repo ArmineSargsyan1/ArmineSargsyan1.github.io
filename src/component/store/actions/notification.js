@@ -11,6 +11,7 @@ export const loadUnreadNotifications = createAsyncThunk(
     try {
 
       const {data: {notifications}} = await Api.getUnreadNotifications()
+      console.log(notifications,2222)
       return notifications;
 
     } catch (error) {
@@ -23,22 +24,16 @@ export const markNotificationAsRead = createAsyncThunk(
   'notifications/markAsRead',
   async (notificationId, { rejectWithValue }) => {
     try {
-      await Api.markNotificationAsRead({notificationId})
-      // await axios.patch(
-      //   `${serverUrl}/admin-notification/${notificationId}/read`,
-      //   null,
-      //   { headers: { Authorization: token } }
-      // );
-      console.log(notificationId,333333333333)
+   await Api.markNotificationAsRead({notificationId})
       return notificationId;
     } catch (error) {
+      console.log(error,"noy")
       return rejectWithValue(error.response.data || error.message);
     }
   }
 );
 
 
-export const setLogin = createAction('login/user');
 
 export const addNotification = (notification) => {
   return {
@@ -46,5 +41,3 @@ export const addNotification = (notification) => {
     payload: notification,
   };
 };
-export const setReadStatus = createAction("read/status");
-export const setStatus = createAction("notifications/status");

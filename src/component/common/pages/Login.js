@@ -277,7 +277,7 @@ const Login = () => {
                   value={user[path]}
                   onChange={({target: {value}}) => onChange(path, value)}
                   // errors={error}
-                  // className={`login__input ${errors.password ? 'error' : ''}`}
+                  //  className={`login__input ${error.password ? 'error' : ''}`}
 
                 />
               </div>
@@ -286,8 +286,8 @@ const Login = () => {
             <Button
               type="submit"
               className="login__button"
-               // disabled={loading}
-              loading={loading}
+              disabled={loading}
+              // loading={loading}
             >
              Login
             </Button>

@@ -3,17 +3,15 @@ import {useDispatch, useSelector} from 'react-redux';
 import io from 'socket.io-client';
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBell, faEnvelopeCircleCheck} from "@fortawesome/free-solid-svg-icons";
+import {faEnvelopeCircleCheck} from "@fortawesome/free-solid-svg-icons";
 import {ReactComponent as BellIcon} from "../../assets/image/bell.svg";
 
 import _ from "lodash";
-// import {FallingLines} from "react-loader-spinner";
 import {
   addNotification,
   loadUnreadNotifications,
   markNotificationAsRead,
-  setReadStatus,
-  setStatus
+
 } from "../store/actions/notification";
 import moment from "moment";
 import {getUserProfileRequest} from "../store/actions/user";
@@ -36,6 +34,7 @@ const Notifications = () => {
   const [id, setId] = useState([])
 
 
+
   useEffect(() => {
     dispatch(getUserProfileRequest())
   }, []);
@@ -54,7 +53,6 @@ const Notifications = () => {
       });
 
       socket.on('review_reply', (data) => {
-        console.log('New notification:', data);
         dispatch(addNotification(data));
         dispatch(loadUnreadNotifications());
       });
@@ -66,7 +64,7 @@ const Notifications = () => {
         socket.disconnect();
       };
     }
-  }, [user.id, dispatch]);
+  }, [user.id,]);
 
 
 
@@ -97,18 +95,15 @@ const Notifications = () => {
   }
   const handleMarkAsRead = async (id) => {
     setId(prevState => _.uniq([...prevState, id]))
-    dispatch(setStatus(""))
-    dispatch(setReadStatus(""))
     await dispatch(markNotificationAsRead(id));
     await dispatch(loadUnreadNotifications());
+
   };
 
-  console.log(notifications, "A")
   return (
 
     <div ref={menuRef} className="notification-container">
       <div className="notification-bell" onClick={openNotifications}>
-        {/*<FontAwesomeIcon icon={faBell} className={isNotification ? "bell-icon-active" : "bell-icon"}/>*/}
         <BellIcon className={isNotification ? "bell-icon-active" : "bell-icon"}/>
         {isNotification &&<div className="notification-arrow"></div>}
         {unreadCount !== 0 && (

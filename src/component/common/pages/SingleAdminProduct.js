@@ -27,7 +27,6 @@ const SingleAdminProduct = () => {
   const productStatus = (state) => state.products.productStatus;
   const selectError = (state) => state.products.error;
 
-  ///singleProd
   const product = useSelector((state) => state.products.product);
   const lo = useSelector((state) => state.products.loading);
 
@@ -45,23 +44,7 @@ const SingleAdminProduct = () => {
 
 
 
-  const onDeleteImage = (imageId) => {
-    dispatch(deleteImageRequest(imageId));
-  };
 
-
-  const updateProduct = (imageId) => {
-    dispatch(setModalInfo({
-      id,
-      name,
-      size,
-      price,
-      description,
-      brandName,
-      quantity,
-      imageId
-    }));
-  };
 
   return (
     <>
