@@ -1,0 +1,535 @@
+//@import "variables";
+//
+//.notification-container {
+//  //position: relative;
+//  //z-index: 20;
+//
+//}
+//
+//.notification-bell {
+//  color: $interfaceColor;
+//  display: flex;
+//  justify-content: center;
+//  align-items: center;
+//  font-size: 25px;
+//  width: 50px;
+//  height: 50px;
+//  position: relative;
+//  cursor: pointer;
+//
+//  .notification-count {
+//    position: absolute;
+//    background: red;
+//    width: 20px;
+//    height: 20px;
+//    display: flex;
+//    justify-content: center;
+//    align-items: center;
+//    border-radius: 20px;
+//    right: 0;
+//    top: 0;
+//
+//    strong {
+//      font-size: 14px;
+//      color: white;
+//      font-family: "RobotoMedium", sans-serif;
+//    }
+//  }
+//
+//  .bell-icon {
+//    transition: 0.2s all;
+//    opacity: 0.8;
+//
+//    &:hover{
+//      transform: scale(1.1);
+//      opacity: 1;
+//    }
+//
+//    &-active{
+//      transform: scale(1.1);
+//      color: white;
+//      opacity: 1;
+//    }
+//  }
+//
+//}
+//
+//
+//
+//.notification-dropdown {
+//  border-radius: 5px;
+//  position: absolute;
+//  width: 100%;
+//  background: #ffffff;
+//  box-shadow: 0px 0px 7px rgba(66, 68, 90, 1);
+//
+//  .notification-arrow {
+//    position: absolute;
+//    width: 10px;
+//    top: -15px;
+//    left: 15px;
+//    height: 10px;
+//    border: 10px solid transparent;
+//    border-bottom: 10px solid #ffffff;
+//  }
+//
+//  .notifications-header {
+//    padding: 10px;
+//
+//    h2 {
+//      color: $interfaceColor;
+//      font-family: "PoppinsMedium", sans-serif;
+//    }
+//  }
+//
+//  .notifications-content {
+//    width: 100%;
+//    height: 405px;
+//    overflow-y: scroll;
+//    border-top: 2px solid #d1d1d1;
+//    scroll-behavior: smooth;
+//
+//    &::-webkit-scrollbar {
+//      width: 5px;
+//      border-radius: 10px;
+//    }
+//
+//    &::-webkit-scrollbar-track {
+//      background: #f1f1f1;
+//      border-radius: 10px;
+//    }
+//
+//    &::-webkit-scrollbar-thumb {
+//      background: $interfaceColor;
+//      border-radius: 10px;
+//    }
+//
+//    &::-webkit-scrollbar-thumb:hover {
+//      background: #04a504;
+//    }
+//
+//    .notification-empty {
+//      display: flex;
+//      justify-content: center;
+//      align-items: center;
+//      width: 100%;
+//      height: 100%;
+//
+//      h2 {
+//        color: #d1d1d1;
+//        font-family: "PoppinsMedium", sans-serif;
+//      }
+//    }
+//
+//    .notification-item {
+//      position: relative;
+//      border-top: 1px solid #d1d1d1;
+//
+//      &:first-child {
+//        border: none;
+//      }
+//
+//      &:hover .notification-block {
+//        color: $interfaceColor;
+//      }
+//
+//      &:hover .envelope-icon {
+//        opacity: 1;
+//      }
+//
+//      &:hover .notification-image {
+//        border: 2px solid $interfaceColor;
+//      }
+//
+//      .notification-block {
+//        padding: 20px 10px;
+//        display: flex;
+//        gap: 10px;
+//        cursor: pointer;
+//        transition: 0.2s all;
+//
+//        &:active {
+//          background: #d1d1d1 !important;
+//        }
+//
+//        .notification-image-container {
+//          display: flex;
+//          justify-content: center;
+//          align-items: center;
+//
+//          .notification-image {
+//            width: 60px;
+//            height: 60px;
+//            border: 2px solid #d1d1d1;
+//            border-radius: 50%;
+//            transition: 0.2s all;
+//
+//            img {
+//              width: 100%;
+//              height: 100%;
+//              object-fit: cover;
+//              border-radius: 50%;
+//            }
+//          }
+//        }
+//
+//        .notification-info {
+//          width: 100%;
+//          display: flex;
+//          flex-direction: column;
+//          justify-content: space-evenly;
+//          white-space: nowrap;
+//          overflow: hidden;
+//          text-overflow: ellipsis;
+//
+//          .notification-date,
+//          .notification-title,
+//          .notification-message {
+//            font-family: "PoppinsMedium", sans-serif;
+//            font-size: 14px;
+//            position: relative;
+//            white-space: nowrap;
+//            overflow: hidden;
+//            text-overflow: ellipsis;
+//          }
+//
+//          .notification-date {
+//            font-family: "RobotoMedium", sans-serif;
+//          }
+//        }
+//      }
+//
+//      &.notification-loading .notification-block {
+//        opacity: 0.5;
+//      }
+//
+//      .envelope-icon,
+//      .envelope-icon-active {
+//        position: absolute;
+//        top: 10px;
+//        right: 10px;
+//        font-size: 15px;
+//        color: limegreen;
+//        transition: 0.2s all;
+//        z-index: 10;
+//        cursor: pointer;
+//        padding: 5px;
+//        border-radius: 5px;
+//      }
+//
+//      .envelope-icon {
+//        opacity: 0;
+//        border: 2px solid #d1d1d1;
+//      }
+//
+//      .envelope-icon-active {
+//        opacity: 1;
+//        border: 2px solid $interfaceColor;
+//      }
+//
+//      .envelope-icon:active {
+//        border-color: $interfaceColor;
+//      }
+//    }
+//  }
+//}
+//
+//// Loading states
+//.loading-n {
+//  z-index: 9;
+//  width: 100%;
+//  height: 100%;
+//  display: flex;
+//  justify-content: center;
+//  align-items: center;
+//  top: 0;
+//  position: absolute;
+//}
+//
+//.loading-gradient-n {
+//  border-radius: 5px;
+//  opacity: 0.7;
+//  background: linear-gradient(
+//                  90deg,
+//                  rgba(255, 255, 255, 1) 0%,
+//                  rgba(194, 194, 194, 1) 35%,
+//                  rgba(230, 230, 230, 1) 100%
+//  );
+//  background-size: 400%;
+//  animation: gradient 2s infinite linear;
+//}
+
+@import "variables";
+
+.notification-container {
+  //position: relative;
+  //z-index: 20;
+
+}
+
+.notification-bell {
+  color: $interfaceColor;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  width: 50px;
+  height: 50px;
+  position: relative;
+  cursor: pointer;
+
+  .notification-count {
+    position: absolute;
+    background: red;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    right: 0;
+    top: 0;
+
+    strong {
+      font-size: 14px;
+      color: white;
+      font-family: "RobotoMedium", sans-serif;
+    }
+  }
+
+  .bell-icon {
+    transition: 0.2s all;
+    opacity: 0.8;
+
+    &:hover {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+
+    &-active {
+      transform: scale(1.1);
+      color: darken($interfaceColor, 8%);
+      opacity: 1;
+    }
+  }
+
+}
+
+.notification-arrow {
+  position: absolute;
+  top: 50px;
+  right: 30%;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: none;
+  border-bottom: 10px solid #cbcccc;
+
+  @media (max-width: 768px) {
+    right: 20%;
+  }
+
+  @media (max-width: 480px) {
+    right: 15%;
+  }
+}
+
+.notification-dropdown {
+  border-radius: 5px;
+  top: 80px;
+  left: 50%;
+  margin-right: 10px;
+  position: absolute;
+  width: 40%;
+  background: #ffffff;
+  box-shadow: 0 0 7px rgba(66, 68, 90, 1);
+
+  @media (max-width: 768px) {
+    width: 100%;
+    left: 0;
+  }
+
+
+  .notifications-header {
+    padding: 10px;
+
+    h2 {
+      color: $interfaceColor;
+      font-size: 18px;
+    }
+  }
+
+  .notifications-content {
+    margin: 5px;
+    width: 100%;
+    height: 400px;
+    overflow-y: scroll;
+    border-top: 2px solid #cbcccc;
+    scroll-behavior: smooth;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $interfaceColor;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #04a504;
+    }
+
+    .notification-empty {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+
+      h2 {
+        font-size: 18px;
+        text-align: center;
+        color: #8B8D92;
+      }
+    }
+
+    .notification-item {
+      position: relative;
+      border-top: 1px solid #d1d1d1;
+
+      &:first-child {
+        border: none;
+      }
+
+      &:hover .notification-block {
+        color: $interfaceColor;
+      }
+
+      &:hover .envelope-icon {
+        opacity: 1;
+      }
+
+      &:hover .notification-image {
+        border: 2px solid $interfaceColor;
+      }
+
+      .notification-block {
+        padding: 20px 10px;
+        display: flex;
+        gap: 10px;
+        cursor: pointer;
+        transition: 0.2s all;
+
+        &:active {
+          background: #d1d1d1 !important;
+        }
+
+        .notification-image-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .notification-image {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #d1d1d1;
+            border-radius: 50%;
+            transition: 0.2s all;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              border-radius: 50%;
+            }
+          }
+        }
+
+        .notification-info {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          .notification-date,
+          .notification-title,
+          .notification-message {
+            font-size: 14px;
+            position: relative;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+        }
+      }
+
+      &.notification-loading .notification-block {
+        opacity: 0.5;
+      }
+
+      .envelope-icon,
+      .envelope-icon-active {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 15px;
+        color: $interfaceColor;
+        transition: 0.2s all;
+        z-index: 10;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 5px;
+      }
+
+      .envelope-icon {
+        opacity: 0;
+        border: 2px solid #d1d1d1;
+      }
+
+      .envelope-icon-active {
+        opacity: 1;
+        border: 2px solid $interfaceColor;
+      }
+
+      .envelope-icon:active {
+        border-color: $interfaceColor;
+      }
+    }
+  }
+}
+
+.loading-n {
+  z-index: 9;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  position: absolute;
+}
+
+.loading-gradient-n {
+  border-radius: 5px;
+  opacity: 0.7;
+  background: linear-gradient(
+                  90deg,
+                  rgba(255, 255, 255, 1) 0%,
+                  rgba(194, 194, 194, 1) 35%,
+                  rgba(230, 230, 230, 1) 100%
+  );
+  background-size: 400%;
+  animation: gradient 2s infinite linear;
+}

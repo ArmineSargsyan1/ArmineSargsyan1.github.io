@@ -18,7 +18,7 @@ const DiscountProduct = ({ product }) => {
   const { startDate, endDate } = query;
   const [discountPercentage, setDiscountPercentage] = useState({});
   const [loading, setLoading] = useState(false);
-  // Destructure product fields
+
   const { id, brandName, name, description, images, size, store, price, discount, createdAt, updatedAt } = product;
 
 
@@ -28,15 +28,11 @@ const DiscountProduct = ({ product }) => {
     setQuery({ startDate: start, endDate: end });
   };
 
-  // Handle form submission to apply discount
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Set loading to true while submitting
     setLoading(true);
 
-
-    // Dispatch apply discount action
     await dispatch(
       applyDiscountToProduct({
         productId: id,
@@ -46,7 +42,6 @@ const DiscountProduct = ({ product }) => {
       })
     );
 
-    // Reset discount percentage state and set loading to false after submission
     onClose()
     setLoading(false);
 
@@ -61,7 +56,6 @@ const DiscountProduct = ({ product }) => {
   const onClose = () => {
     setDiscountPercentage({});
   };
-
   return (
     <div className="product-discount">
 
@@ -69,7 +63,9 @@ const DiscountProduct = ({ product }) => {
         {_.isEmpty(discount) ? "Add Discount" : "Update Discount"}
       </Button>
 
+      {discount &&
       <>
+
         <p>
           <span className="original-price">Original Price: ${parseFloat(price)}</span>
           <span className="discounted-price">
@@ -82,50 +78,51 @@ const DiscountProduct = ({ product }) => {
           {moment(discount?.endDate).format('LL')}
         </p>
 
-        <Modal onClose={onClose} isOpen={!_.isEmpty(discountPercentage)}>
-          <div className="admin-discount-product">
-            <form onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="discountPercentage">Discount Percentage</label>
-                <input
-                  type="number"
-                  id="discountPercentage"
-                  value={discountPercentage?.percentage}
-                  onChange={({ target: { value } }) => onChangePercentage(value)}
-                  min="10"
-                  max="100"
-                />
-              </div>
 
-              <div>
-                <DatePiker
-                  showIcon
-                  selected={startDate}
-                  startDate={startDate}
-                  endDate={endDate}
-                  onChange={changeDate}
-                  selectsRange
-                  monthsShown={2}
-                  showYearDropdown
-                  showMonthDropdown
-                  openToDate={new Date()}
-                  minDate={new Date()}
-                />
-              </div>
-
-              <Button
-                type="submit"
-                className="admin-discount-button"
-                disabled={!discountPercentage.percentage || discountPercentage.percentage < 10 || discountPercentage.percentage > 100}
-                loading={loading}
-              >
-                Apply Discount
-              </Button>
-            </form>
-          </div>
-        </Modal>
       </>
+      }
+      <Modal onClose={onClose} isOpen={!_.isEmpty(discountPercentage)}>
+      <div className="admin-discount-product">
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="discountPercentage">Discount Percentage</label>
+            <input
+              type="number"
+              id="discountPercentage"
+              value={discountPercentage?.percentage}
+              onChange={({ target: { value } }) => onChangePercentage(value)}
+              min="10"
+              max="100"
+            />
+          </div>
 
+          <div>
+            <DatePiker
+              showIcon
+              selected={startDate}
+              startDate={startDate}
+              endDate={endDate}
+              onChange={changeDate}
+              selectsRange
+              monthsShown={2}
+              showYearDropdown
+              showMonthDropdown
+              openToDate={new Date()}
+              minDate={new Date()}
+            />
+          </div>
+
+          <Button
+            type="submit"
+            className="admin-discount-button"
+            disabled={!discountPercentage.percentage || discountPercentage.percentage < 10 || discountPercentage.percentage > 100}
+            loading={loading}
+          >
+            Apply Discount
+          </Button>
+        </form>
+      </div>
+    </Modal>
     </div>
   );
 };

@@ -13,7 +13,8 @@ const Input = memo (forwardRef((
     onFocus,
     errors,
     label,
-    name
+    name,
+    ...p
   }, ref) => {
 
   let password = type === "password"
@@ -34,18 +35,13 @@ const Input = memo (forwardRef((
       <input
         type={currentType}
         ref={ref}
-        // className={errors ? "input error" : "input"}
-
-
         className={`input ${errors ? "error" : ""} ${className}` }
-
-
         // className={className  ? `input ${className}` : "input"}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
         onFocus={onFocus}
-
+        {...p}
       />
 
       {password && (

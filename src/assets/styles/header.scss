@@ -1,34 +1,35 @@
- @import "variables";
+@import "variables";
 
 .header {
   background-color: white;
   position: fixed;
+  z-index: 900;
   top: 0;
   width: 100%;
   height: 80px;
 
-  &__title{
-      font-size: 20px;
+  &__title {
+    text-transform: capitalize;
+    font-size: 20px;
     margin-left: 80px;
-      font-weight: 700;
-      color: #333;
-      letter-spacing: 1px;
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 1px;
   }
 
-  &__search{
+  &__search {
     position: relative;
   }
 
-  &__info{
+  &__info {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 40px;
-
+    gap: 20px;
 
   }
 
-  &__logo{
+  &__logo {
     top: 20px;
     position: absolute;
     left: 20px;
@@ -43,17 +44,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  z-index: 9999999;
 
   &__list {
-    margin-top: 30px;
+    margin-top: 25px;
     list-style: none;
     position: relative;
-
-    &:last-child{
-      padding-bottom: 50px;
-      border-bottom: 1px solid #a8a8a9;
-    }
-
   }
 
 
@@ -62,11 +59,49 @@
     font-weight: 600;
     color: #444444;
     letter-spacing: 1px;
-    line-height: 30px;
-    text-transform: uppercase;
+    line-height: 28px;
     overflow: hidden;
     text-decoration: none;
     transition: all 0.3s ease-in-out;
+    font-family: 'Poppins', sans-serif;
+
+
+    &-buttons {
+      border-top: 1px solid #a8a8a9;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      &:last-child {
+        padding-top: 20px;
+      }
+    }
+
+    &-button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      color: #fff;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:last-child {
+        background-color: #f44336;
+
+        &:hover {
+          background-color: darken(#f44336, 7%);
+        }
+      }
+
+      &:active {
+        transform: scale(0.97);
+      }
+    }
   }
 
   &__link:hover,
@@ -77,16 +112,18 @@
       content: "";
       width: 4px;
       height: 17px;
+      border-radius: 15px 2px 2px 15px;
       background-color: $interfaceColor;
       position: absolute;
-      top: 6px;
-      right: 0;
+      top: 7px;
+      right: 10px;
     }
   }
 
   &__icon {
     display: none;
   }
+
 }
 
 .nav__block {
@@ -111,8 +148,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-margin: 20px 0;
+  margin: 20px 0;
   width: 100%;
+  min-height: 55px;
 
   input {
     padding: 10px 15px;
@@ -135,7 +173,7 @@ margin: 20px 0;
   }
 }
 
-.glass{
+.glass {
   cursor: pointer;
   position: absolute;
   right: 10px;
@@ -144,17 +182,31 @@ margin: 20px 0;
   margin: auto;
 }
 
-
-
-
-
-
-.header__user-profile {
+.header__user-profile,
+.user-profile-link {
   display: flex;
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  margin-right: 30px;
+  margin-right: 15px;
+
+
+  @media (max-width: 768px) {
+    gap: 6px;
+    margin-right: 15px;
+
+  }
+
+  @media (max-width: 480px) {
+    gap: 5px;
+    margin-right: 10px;
+    font-size: 14px;
+
+    span {
+      display: none;
+    }
+  }
+
 
   .email {
     font-weight: 600;
@@ -163,214 +215,45 @@ margin: 20px 0;
   }
 
   img {
-    width: 30px;
-    height: 30px;
+    width: 45px;
+    height: 35px;
     border-radius: 20%;
     object-fit: cover;
+    object-position: center;
     border: 2px solid $interfaceColor;
+
   }
 
-  .down-arrow {
-    width: 20px;
-    height: 20px;
 
+}
 
-    fill: $interfaceColor;
-    transition: transform 0.2s ease;
-
-    &.rotate {
-      transform: rotate(180deg);
-    }
+@media (max-width: 768px) {
+  .header__title {
+    display: none
+  }
+  .user-name {
+    display: none;
   }
 }
 
 
 
-//@import "variables";
+//.my-category-icon {
+//  font-size: 17px;
+//  font-weight: 600;
+//  color: #444444;
+//  letter-spacing: 1px;
+//  line-height: 30px;
+//  text-transform: uppercase;
+//  overflow: hidden;
+//  text-decoration: none;
+//  transition: all 0.3s ease-in-out;
 //
-//.header {
-//  background-color: red;
-//  //background-color: white;
-//  position: fixed;
-//  top: 0;
-//  width: 100%;
-//  height: 80px;
-//  z-index: 1000;
+//  fill: $interfaceColor;
 //
-//  &__title {
-//    font-size: 20px;
-//    margin-left: 80px;
-//    font-weight: 700;
-//    color: #333;
-//    letter-spacing: 1px;
-//  }
-//
-//  &__info {
-//    display: flex;
-//    justify-content: space-between;
-//    align-items: center;
-//    gap: 40px;
-//    background-color: blue;
-//  }
-//
-//  &__logo {
-//    position: absolute;
-//    left: 20px;
-//    width: 40px;
-//    height: 40px;
-//    fill: $interfaceColor;
-//    transition: transform 0.2s ease;
-//  }
-//
-//  &__user-profile {
-//    display: flex;
-//    align-items: center;
-//    gap: 10px;
-//    cursor: pointer;
-//
-//    .email {
-//      font-weight: 600;
-//      color: #333;
-//      font-size: 14px;
-//    }
-//
-//    img {
-//      width: 30px;
-//      height: 30px;
-//      border-radius: 20%;
-//      object-fit: cover;
-//      border: 2px solid $interfaceColor;
-//    }
-//
-//    .down-arrow {
-//      width: 20px;
-//      height: 20px;
-//      fill: $interfaceColor;
-//      transition: transform 0.2s ease;
-//
-//      &.rotate {
-//        transform: rotate(180deg);
-//      }
-//    }
+//  &:hover {
+//    color: $interfaceColor;
+//    fill: darken($interfaceColor, 10%);
+//    transform: scale(1.05);
 //  }
 //}
-//
-//.nav {
-//  display: flex;
-//  align-items: center;
-//  justify-content: space-between;
-//
-//  &__list {
-//    margin-top: 30px;
-//    list-style: none;
-//    position: relative;
-//  }
-//
-//  &__link {
-//    font-size: 17px;
-//    font-weight: 600;
-//    color: #444;
-//    letter-spacing: 1px;
-//    line-height: 30px;
-//    text-transform: uppercase;
-//    text-decoration: none;
-//    transition: all 0.3s ease-in-out;
-//
-//    &:hover,
-//    &.active {
-//      color: $interfaceColor;
-//
-//      &::after {
-//        content: "";
-//        width: 4px;
-//        height: 17px;
-//        background-color: $interfaceColor;
-//        position: absolute;
-//        top: 6px;
-//        right: 0;
-//      }
-//    }
-//  }
-//
-//  &__icon {
-//    display: none;
-//  }
-//}
-//
-//.nav__block {
-//  position: fixed;
-//  top: 79px;
-//  left: -250px;
-//  width: 220px;
-//  height: 100vh;
-//  background-color: white;
-//  box-shadow: 10px 0 40px rgba(0, 0, 0, 0.05);
-//  flex-direction: column;
-//  padding: 10px 20px;
-//  transition: left 0.3s ease;
-//
-//  &.active {
-//    left: 0;
-//  }
-//}
-//
-//.search-bar {
-//  width: 100%;
-//  display: flex;
-//  align-items: center;
-//  gap: 10px;
-//  margin: 20px auto;
-//  position: relative;
-//
-//  input {
-//    padding: 10px 15px;
-//    border: 1px solid #ccc;
-//    border-radius: 6px;
-//    font-size: 16px;
-//    width: 100%;
-//    max-width: 300px;
-//    outline: none;
-//    transition: border-color 0.3s ease;
-//
-//    &::placeholder {
-//      color: #999;
-//    }
-//
-//    &:focus {
-//      border-color: #4caf50;
-//      box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
-//    }
-//  }
-//
-//  .glass {
-//    position: absolute;
-//    right: 15px;
-//    top: 50%;
-//    transform: translateY(-50%);
-//    cursor: pointer;
-//    color: #666;
-//  }
-//}
-
-
-
- .my-category-icon {
-   font-size: 17px;
-   font-weight: 600;
-   color: #444444;
-   letter-spacing: 1px;
-   line-height: 30px;
-   text-transform: uppercase;
-   overflow: hidden;
-   text-decoration: none;
-   transition: all 0.3s ease-in-out;
-
-   // For SVG icons
-   fill: $interfaceColor;
-
-   &:hover {
-     color: $interfaceColor;
-     fill: darken($interfaceColor, 10%);
-     transform: scale(1.05);
-   }
- }

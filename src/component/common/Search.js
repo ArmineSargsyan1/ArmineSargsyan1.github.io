@@ -1,7 +1,10 @@
 import Input from "./Input";
+import {useSelector} from "react-redux";
+import Pagination from "./Pagination";
 
-const Search = ({ query, setQuery }) => {
+const Search = ({ query = {}, setQuery , products, maxPageCount}) => {
   const { search, minPrice, maxPrice } = query;
+  const clickedBar = useSelector((state) => state.users.clickedBar);
 
 
   const onQueryChange = (key, value) => {
@@ -9,27 +12,31 @@ const Search = ({ query, setQuery }) => {
       ...query,
       page: 1,
       [key]: value,
+
     });
   };
+
+
+  const onPageChange = (selectedItem) => {
+    const selectedPage = selectedItem.selected + 1; // react-paginate uses zero-based index
+    setQuery({
+      ...query,
+      page: selectedPage,
+    });
+  };
+
+
 
 
   return (
     <>
       <div
-        style={{display: "none"}}
+        className="search-container"
+        style={{
+          opacity: !clickedBar ? 1 : 0,
+          transition: 'opacity 0.1s ease-in-out',
+        }}
       >
-
-      </div>
-
-      <div className="search-container">
-        {/* Search Bar */}
-        <Input
-          type="text"
-          placeholder="Search products..."
-          value={search}
-          onChange={({target: {value}}) => onQueryChange('search', value)}
-
-        />
 
         <div className="filters">
           <div style={{display: "block"}}>
@@ -59,6 +66,26 @@ const Search = ({ query, setQuery }) => {
 
         </div>
       </div>
+
+
+      {products?.length > 0 && maxPageCount > 1 && (
+        <div className="pagination">
+          <Pagination
+            previousLabel={"<"}
+            nextLabel={">"}
+            pageCount={maxPageCount}
+            onPageChange={onPageChange}
+            forcePage={(query.page || 1) - 1}
+            pageLinkClassName="pagination__page"
+            previousLinkClassName="pagination__page"
+            nextLinkClassName="pagination__page"
+            activeLinkClassName="pagination__page active"
+            containerClassName="pagination__wrapper"
+          />
+        </div>
+
+      )}
+
     </>
 
 
@@ -67,3 +94,6 @@ const Search = ({ query, setQuery }) => {
 
 
 export default Search
+
+
+

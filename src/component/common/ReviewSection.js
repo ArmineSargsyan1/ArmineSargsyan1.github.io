@@ -40,7 +40,6 @@ const ReviewSection = ({productId}) => {
     }
   };
 
-
   return (
     <div className="review-section">
 
@@ -52,7 +51,13 @@ const ReviewSection = ({productId}) => {
               <div className="review__header">
                 <div className="review__user_block">
                   <div className="review__avatar">
-                    <FontAwesomeIcon icon={faUser} className="review__icon"/>
+                    {review?.user?.avatar?.[0]?.path ? (
+                      <img src={review.user.avatar[0].path} alt="user" className="review__avatar"/>
+                    ) : (
+                      <FontAwesomeIcon icon={faUser} className="review__icon" />
+                    )}
+
+
                   </div>
                   <div className="review__user">
                     <strong>

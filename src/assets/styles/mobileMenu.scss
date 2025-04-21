@@ -1,24 +1,5 @@
-//.mobile{
-//  position: fixed;
-//  right: 0;
-//  display: none;
-//  align-items: center;
-//
-//  &__container {
-//    height: 100%;
-//    width: 100%;
-//    //position: absolute;
-//    //background-color: rgba(197, 23, 23, 0.1);
-//    //z-index: 4;
-//
-//  }
-//
-//}
-//
-//
-//
-
 .mobile {
+  width: 50px;
   position: fixed;
   top: 40px;
   left: 180px;
@@ -30,7 +11,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 999;
+    //z-index: 999;
     display: none;
     &.active {
       display: block;
@@ -38,13 +19,13 @@
   }
 
   .nav__icon {
-    //position: absolute;
-    //left: 100px;
-    //background: white;
     padding: 2px 5px;
     border-radius: 8px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
     margin-left:   10px;
     margin-top: 10px;
+
+    &:hover{
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
   }
 }

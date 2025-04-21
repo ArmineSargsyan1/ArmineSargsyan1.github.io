@@ -6,12 +6,11 @@ import Login from "./component/common/pages/Login";
 import SingleCategoryProduct from "./component/common/pages/SingleCategoryProduct";
 import SingleAdminProduct from "./component/common/pages/SingleAdminProduct";
 import Home from "./component/common/pages/Home";
+import AdminUserProfile from "./component/common/AdminUserProfile";
 
 
 function App() {
   return (
-    // <Orders/>
-    // <ProductForm/>
     <Routes>
       <Route path="/" element={<Layout/>}>
         <Route index element={<Home/>}/>
@@ -19,7 +18,7 @@ function App() {
 
 
 
-        {/*<Route path="/user" element={<Users/>}/>*/}
+        <Route path="/profile" element={<AdminUserProfile/>}/>
 
         <Route path="/admin/category" element={<AdminCategoryList/>} />
 
@@ -31,14 +30,6 @@ function App() {
 
 
         {/*<Route path="/admin/product/:productId" element={<AdminDiscountProduct/>} />*/}
-
-
-        {/*</Route>*/}
-
-
-
-
-
 
       </Route>
     </Routes>

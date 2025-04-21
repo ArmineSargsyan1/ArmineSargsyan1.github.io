@@ -24,4 +24,18 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+
+
+export const getUserProfileRequest = createAsyncThunk(
+  'profile/fetchUserProfile',
+  async () => {
+    const {data : {user}} = await Api.getProfile();
+    return user
+  }
+);
+
 export const setLogin = createAction('login/user');
+
+export const setClickedBar = createAction('clickedBar');
+
+export const logoutUser = createAction('auth/logoutUser');

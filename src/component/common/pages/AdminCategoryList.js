@@ -1,12 +1,11 @@
 import React, { useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {useNavigate, useParams} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {ReactComponent as DownArrow} from "../../../assets/image/sort-down-solid.svg";
 
 import { fetchCategories } from "../../store/actions/adminCategory";
 import Loader from "../Loader";
-import Button from "../Button";
-import useQuery from "../../../utils/useQuery";
-// import AdminMenu from "../common/AdminMenu";
+
 
 const AdminCategoryList = () => {
   const dispatch = useDispatch();
@@ -14,39 +13,51 @@ const AdminCategoryList = () => {
   const loadingCategories = useSelector((state) => state.categories.loading);
 
   const navigate = useNavigate();
-  const params = useParams();
+
+  const location = useLocation()
 
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, []);
+
+
   return (
     <div className="admin-container">
-      {
-        // Categories List
-        loadingCategories ? (
-          <Loader/>
+      <h3 className="category-title">
+        {location.state ? (
+          <>
+            Choose Category <DownArrow className="down-arrow"/>
+          </>
         ) : (
-          <div className="categories-list">
+          "View Products"
+        )}
 
-            {categories.map((cat) => (
-              <div
-                key={cat.id}
-                className="category-item"
-                onClick={() => navigate(`/admin/category/${cat.id}`, {state: {category: cat}})}
-              >
-                {cat.name}
+      </h3>
+      {
+        loadingCategories ? (
+          <Loader height="60" width="100%" count="10" className="categories-list"/>
 
-                {/*<div className="admin-actions">*/}
-                {/*  <Button onClick={() =>  navigate(`/admin/category/${cat.id}`, {state: {category: cat}})} className="admin-button">*/}
-                {/*    View Products*/}
-                {/*  </Button>*/}
-                {/*</div>*/}
+        ) : (
+            <div className="categories-list">
 
+              {categories.map((cat) => (
+                <div
+                  key={cat.id}
+                  className="category-item"
+                  onClick={() =>
+                    location.state
+                      ?
+                      navigate(`/admin/category/${cat.id}`, {state: {categoryId: cat.id}})
+                      : navigate(`/admin/category/${cat.id}`)
+                  }
+                >
+                  {cat.name}
 
-              </div>
-            ))}
-          </div>
+                </div>
+              ))}
+            </div>
+
         )}
     </div>
   );

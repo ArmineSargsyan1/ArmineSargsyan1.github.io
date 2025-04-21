@@ -1,0 +1,41 @@
+@import "variables";
+.pagination{
+  margin-top: 50px;
+  margin-bottom: 20px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+
+  &__wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    gap: 5px;
+  }
+  &__page{
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 3px;
+    font-weight: 400;
+    color: #ffffff;
+    background-color: #000;
+
+    &.icon{
+      padding: 11px;;
+    }
+
+    &.active,
+    &:hover{
+      background-color: $interfaceColor;
+      color: #ffffff;
+    }
+
+  }
+
+}

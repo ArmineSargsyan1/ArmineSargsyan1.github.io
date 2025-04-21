@@ -1,12 +1,11 @@
 @import "variables";
 .reviews {
   width: 100%;
-  display: flex;
-
   .review__item {
     font-family: "PoppinsMedium", "sans-serif";
     background: white;
     border-radius: 20px;
+    margin-top: 50px;
     width: 100%;
     padding: 20px;
     -webkit-box-shadow: 0 0 15px -10px rgba(66, 68, 90, 1);
@@ -29,6 +28,8 @@
           justify-content: center;
           align-items: center;
           border-radius: 100px;
+          object-fit: cover;
+
 
           .review__icon {
             font-size: 30px;
@@ -151,6 +152,8 @@
 
 
 .reply__button{
+  margin-top: 20px;
+  width: 60px;
   float: right;
   color:white;
   background: $interfaceColor;

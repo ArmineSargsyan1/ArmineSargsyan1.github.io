@@ -12,7 +12,8 @@
     gap: 1rem;
     margin: 1rem 0;
     position: fixed;
-    top: 450px;
+    z-index: 901;
+    top: 500px;
     left: 10px;
 
     label {
@@ -37,19 +38,57 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     p {
       font-size: 1rem;
-      margin: 0.3rem 0;
+      margin-top: 10px;
       font-weight: 500;
+
     }
+
+  }
+  .summary__group{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+  }
+
+  .chart__wrapper{
+
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
   }
 
   .chart-container {
-    background: #fff;
+    min-height: 400px;
+    width: calc(100% - 250px);
+    max-width: 900px;
+    //background: #fff;
     padding: 1rem;
     border-radius: 0.5rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     margin-bottom: 2rem;
-  }
 
+  }
+.chart__container_circle{
+  max-height: 400px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+
+  h3 {
+    margin-left: 20px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #444;
+    margin-top: 20px;
+    letter-spacing: 0.5px;
+  }
+}
   .buyers {
     h3 {
       font-size: 1.25rem;
@@ -58,7 +97,7 @@
 
     .buyers-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 1rem;
     }
 
@@ -84,10 +123,35 @@
         font-size: 0.9rem;
         line-height: 1;
 
+
         strong {
           font-weight: 600;
         }
       }
     }
   }
+  @media (max-width: 767px) {
+  .chart__wrapper {
+    display: block;
+    width: 100%;
+  }
+    .chart-container,
+    .chart__container_circle
+    {
+      width: 100% !important;
+      max-width: 100%;
+    }
+    .chart__container_circle{
+      padding: 10px 50px;
+
+      h3 {
+        margin-left: 0;
+        font-size: 1rem;
+        margin-top: 10px;
+      }
+    }
 }
+}
+
+
+

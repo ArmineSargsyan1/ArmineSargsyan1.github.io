@@ -5,7 +5,7 @@ import {
   setModalInfo,
   changeModalInfo,
   deleteProductRequest,
-  fetchCategoryProducts, applyDiscountToProduct, fetchSingleAdminProduct, deleteImageRequest,
+  fetchCategoryProducts, applyDiscountToProduct, fetchSingleAdminProduct, deleteImageRequest, resetProducts,
 } from "../actions/adminProduct";
 
 const initialState = {
@@ -21,8 +21,9 @@ const initialState = {
   deletingProduct: [],
 
   error: "",
-  product: {}
+  product: {},
 
+  message: ""
 
 };
 
@@ -66,14 +67,18 @@ export const adminProductSlice = createReducer(initialState, (builder) => {
     .addCase(createOrUpdateProduct.pending, (state) => {
       state.productStatus = true;
       state.modalInfoStatus = true;
+      state.message = ""
+
     })
     .addCase(createOrUpdateProduct.fulfilled, (state, {payload}) => {
+      console.log(payload,5555555555555)
       const {isUpdate, data} = payload;
       state.productStatus = false;
       state.products.products = isUpdate
         ? state.products.products.map((u) => (u.id === data.id ? data : u))
         : [data, ...state.products.products];
 
+      state.message = payload.message
       state.modalInfo = {};
       state.modalInfoStatus = false;
 
@@ -82,7 +87,8 @@ export const adminProductSlice = createReducer(initialState, (builder) => {
       console.log(payload,"pay")
       state.modalInfoErrors = payload;
       state.modalInfoStatus = false;
-      state.productStatus = false
+      state.productStatus = false;
+      state.message = "";
     })
 
     .addCase(setModalInfo, (state, {payload}) => {
@@ -117,15 +123,15 @@ export const adminProductSlice = createReducer(initialState, (builder) => {
 
     .addCase(changeModalInfo, (state, { payload }) => {
       const { path, value } = payload;
+      console.log(path, value,4444444444444)
       if (path === 'productImage') {
-        // Ensure that productImage is always treated as an array
         state.modalInfo.productImage = Array.isArray(value) ? value : [value];
       } else {
         state.modalInfo[path] = value;
       }
 
-      state.modalInfoErrors = {}; // Reset errors
-      state.modalInfoStatus = false; // Reset status
+      state.modalInfoErrors = {};
+      state.modalInfoStatus = false;
     })
 
     // Fetch Category Products
@@ -134,16 +140,23 @@ export const adminProductSlice = createReducer(initialState, (builder) => {
     })
 
 
-
-
-    .addCase(fetchCategoryProducts.fulfilled, (state, {payload}) => {
+    .addCase(fetchCategoryProducts.fulfilled, (state, { payload }) => {
       state.productStatus = false;
-      state.products = payload;
 
+      const normalizedProducts = payload.products.map((p) => ({
+        product: p.product || p,
+      }));
+
+      state.products = {
+        ...payload,
+        products: normalizedProducts,
+      };
+      state.error = ""
     })
 
-    .addCase(fetchCategoryProducts.rejected, (state) => {
+    .addCase(fetchCategoryProducts.rejected, (state, {payload}) => {
       state.productStatus = false;
+      state.error = payload
     })
 
     .addCase(fetchSingleAdminProduct.pending, (state) => {
@@ -188,19 +201,15 @@ export const adminProductSlice = createReducer(initialState, (builder) => {
 
 
     .addCase(deleteImageRequest.fulfilled, (state, { payload }) => {
-      // Remove image ID from deletingProduct when delete is successful
       state.deletingProduct = state.deletingProduct.filter((id) => id !== payload);
 
-      // Ensure product and images exist before filtering
       if (state.product && state.product.images) {
-        // Filter the images array to exclude the deleted image by ID
         const updatedImages = state.product.images.filter((image) => image.id !== payload);
 
-        // Update the product's images state
         state.product = { ...state.product, images: updatedImages };
       }
 
-      console.log(payload, "Image deleted successfully!"); // Debug log
+      console.log(payload, "Image deleted successfully!");
     })
 
     .addCase(deleteImageRequest.rejected, (state, action) => {
@@ -209,16 +218,21 @@ export const adminProductSlice = createReducer(initialState, (builder) => {
     })
 
 
+    .addCase(resetProducts, (state) => {
+      state.products = {
+        products: [],
+        currentPage: 1,
+        maxPageCount: 0,
+      };
+    })
 
 
-
-    .addCase(applyDiscountToProduct.pending, (state) => {
+.addCase(applyDiscountToProduct.pending, (state) => {
       state.productStatus = true;
     })
     .addCase(applyDiscountToProduct.fulfilled, (state, { payload }) => {
       state.productStatus = false;
       state.discountDetails = payload;
-      // console.log(payload)
     })
     .addCase(applyDiscountToProduct.rejected, (state, { payload }) => {
       state.productStatus = false;

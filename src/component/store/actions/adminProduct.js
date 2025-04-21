@@ -55,22 +55,20 @@ export const fetchProducts = createAsyncThunk(
 export const fetchCategoryProducts = createAsyncThunk(
   'adminProduct/fetchCategoryProducts',
   async (payload, thunkAPI) => {
-    const {categoryId, query} = payload
-    console.log(categoryId, query,"pay")
+    const { categoryId, query } = payload;
+    const { page, limit, search, minPrice, maxPrice } = query;
+
     try {
-      const {data} = query.search
-        ? await Api.searchAdminProduct(payload)
-        :  await Api.getSingleCategoryProduct({categoryId, query});
-      console.log(data,333333333333)
+      const { data } = query.search
+        ? await Api.searchAdminProduct({ categoryId, page, minPrice, maxPrice, limit, search })
+        : await Api.getSingleCategoryProduct({ categoryId, query });
+
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue('Error fetching products');
     }
   }
 );
-
-
-
 
 
 
@@ -124,30 +122,19 @@ export const createOrUpdateProduct = createAsyncThunk(
 
     console.log(product,"pppppp")
 
-    const {brandName, description, name, price, size, quantity,  productImage, imageId} = product
+    const {productIm, ...newProducts } = product;
 
-    // const {brandName, description, name, price, size, quantity,  productImage} = product
 
-    // let imageId = " "
+    const {brandName, description, name, price, size, quantity,  productImage, imageId} = newProducts
 
     const validationErrors = Utils.isValidateProductData({ brandName, description, name, price, size, quantity });
 
 
     console.log(validationErrors,"valer")
-    // If validation errors exist, reject with the errors
     if (!_.isEmpty(validationErrors)) {
       return rejectWithValue(validationErrors);
     }
-    //
-    // const validationErrors =
-    //   Utils.isValidateProductData({brandName, description, name, price, size, quantity});
-    //
-    // console.log(validationErrors,333333333)
-    // if (!_.isEmpty(validationErrors)) {
-    //   return rejectWithValue(validationErrors);
-    // }
 
-    console.log(imageId,111111111111)
     let formData = new FormData();
 
     formData.append("name", name);
@@ -181,11 +168,12 @@ export const createOrUpdateProduct = createAsyncThunk(
 
         : await Api.updateAdminProduct({formData, id})
 
-      return {isUpdate: !categoryId, data: !categoryId ? data.product : data.product,};
+      console.log(data)
+      return {isUpdate: !categoryId, data: !categoryId ? data.product : data.product, message: data.message};
 
 
     } catch (error) {
-      return rejectWithValue("All fields are required");
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -289,6 +277,7 @@ export const applyDiscountToProduct = createAsyncThunk(
 
 
 
+export const resetProducts = createAction('products/reset');
 
 export const setModalInfo = createAction("adminProduct/set-modal")
 export const changeModalInfo = createAction("adminProduct/change-modal")

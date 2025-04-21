@@ -1,4 +1,5 @@
 import axios from "axios";
+import {loadUnreadNotifications, markNotificationAsRead} from "./component/store/actions/notification";
 
 export const api = axios.create({
   headers: {
@@ -27,9 +28,9 @@ export default class Api {
 
 
 //user
-  // static getProfile() {
-  //   return api.get("users/profile")
-  // }
+  static getProfile() {
+    return api.get("users/profile")
+  }
   //
   // static async updateUser({data}) {
   //   console.log(data, "api")
@@ -60,106 +61,149 @@ export default class Api {
     return await api.get("admin/products", {
       params: {
         page,
-        limit,
+        limit:3,
         minPrice,
         maxPrice
       },
     });
   };
 
+  static async getAdminStatsResponse({startDate, endDate}) {
+    console.log(startDate, endDate, 333333333)
+    return await api.get(
+      "/admin/statistics/",{
+        params: {
+          startDate, endDate
+        },
+      });
+  };
 
-  static async searchAdminProduct({page, limit, search, minPrice, maxPrice, categoryId}) {
-    console.log(page, limit, search, minPrice, maxPrice, categoryId,77777777)
-    return await api.get(`admin/search`, {
-      params: {
-        page,
-        limit,
-        search,
-        minPrice,
-        maxPrice,
-        categoryIds: categoryId
-
-      },
-    });
+  static async getAdminBuyersResponse({startDate, endDate}) {
+    console.log(startDate, endDate, 333333333)
+    return await api.get(
+      "/admin/buyers/",{
+        params: {
+          startDate,
+          endDate
+        },
+      });
   };
 
 
-  static async getSingleCategoryProduct({categoryId, query}) {
-    const {page, limit, search, minPrice, maxPrice} = query
-    return await api.get(`admin/products/${categoryId}`, {
-      params: {
-        page,
-        limit,
-        search,
-        minPrice,
-        maxPrice
-      },
-    });
-  };
+// static async searchAdminProduct({page, limit, search, minPrice, maxPrice, categoryId})
+  static async searchAdminProduct({page, limit, search, minPrice, maxPrice, categoryId})
+
+  {
+  console.log(page, limit, search, minPrice, maxPrice, categoryId, "search")
+  return await api.get(`admin/search`, {
+    params: {
+      page,
+      limit,
+      search,
+      minPrice,
+      maxPrice,
+      categoryIds: categoryId
+    },
+  });
+};
 
 
-  static getReviewList({productId}) {
-    console.log(productId)
-    return api.get(`/reviews/list/${productId}`)
-  }
+static async getSingleCategoryProduct({categoryId, query})
+{
+  const {page, limit, search, minPrice, maxPrice} = query
+
+  console.log(page, limit, search, minPrice, maxPrice, "get")
+  return await api.get(`admin/products/${categoryId}`, {
+    params: {
+      page,
+      limit:2,
+      minPrice,
+      maxPrice
+    },
+  });
+}
+;
 
 
-  static createReview({reviewId, reply}) {
-    return api.post(`admin/review/reply`,
-      {
-        reviewId,
-        reply
-      }
-    )
-  }
+static async getReviewList({productId})
+{
+  console.log(productId)
+  return await api.get(`/reviews/list/${productId}`)
+}
 
 
-  static async createAdminProduct({formData, categoryId}) {
+static async createReview({reviewId, reply}){
+  console.log(reviewId)
+  return await api.post(`admin/review/reply`,
+    {
+      reviewId,
+      reply
+    }
+  )
+}
 
-    return await api.post(`admin/product/${categoryId}`, formData, {
+
+static async createAdminProduct({formData, categoryId}){
+
+  return await api.post(`admin/product/${categoryId}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+}
+
+
+static async updateAdminProduct({formData, id,})
+{  return await api.put(`admin/product/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
-    });
-  }
+    }
+  );
+}
+
+static deleteAdminProducts({productId}) {
+  return api.delete(`admin/product/${productId}`)
+}
 
 
-  static async updateAdminProduct({formData, id,}) {
-
-    return await api.put(`admin/product/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-  }
-
-  static deleteAdminProducts({productId}) {
-    return api.delete(`admin/product/${productId}`)
-  }
+static async singleAdminProduct({productId}) {
+  console.log(productId, "api")
+  return await api.get(`admin/product/${productId}`,
+  );
+};
 
 
-  static async singleAdminProduct({productId}) {
-    console.log(productId, "api")
-    return await api.get(`admin/product/${productId}`,
+static async adminDiscountProduct({productId, discountPercentage, startDate, endDate}) {
+  return await api.post(`admin/discount`, {
+    productId,
+    discountPercentage,
+    startDate,
+    endDate
+  });
+};
+
+
+static deleteImage({imageId}) {
+  console.log(imageId, "Api")
+  return api.delete(`/admin/image/${imageId}`)
+}
+
+
+  static async getUnreadNotifications() {
+    return await api.get("admin-notification/unread",
     );
   };
 
 
-  static async adminDiscountProduct({productId, discountPercentage, startDate, endDate}) {
-    return await api.post(`admin/discount`, {
-      productId,
-      discountPercentage,
-      startDate,
-      endDate
-    });
+  static async markNotificationAsRead({notificationId}) {
+    return await api.patch(`admin-notification/${notificationId}/read`,
+     null
+    );
   };
-
-
-  static deleteImage({imageId}) {
-    console.log(imageId, "Api")
-    return api.delete(`/admin/image/${imageId}`)
-  }
 
 
 }
+
+
+

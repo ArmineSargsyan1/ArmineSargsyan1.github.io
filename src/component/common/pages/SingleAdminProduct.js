@@ -92,59 +92,6 @@ const SingleAdminProduct = () => {
 
               ))}
           </div>
-
-          {/*<h2>Product</h2>*/}
-          {/*<table className="product-table">*/}
-          {/*  <thead>*/}
-          {/*  <tr>*/}
-          {/*    <th>name</th>*/}
-          {/*    <th>Brand</th>*/}
-          {/*    <th>Description</th>*/}
-          {/*    <th>Size</th>*/}
-          {/*    <th>Store</th>*/}
-          {/*    <th>Images</th>*/}
-          {/*    <th>Actions</th>*/}
-          {/*  </tr>*/}
-          {/*  </thead>*/}
-          {/*  <tbody>*/}
-          {/*  <tr>*/}
-          {/*    <td>{name}</td>*/}
-          {/*    <td>{brandName}</td>*/}
-          {/*    <td>{description}</td>*/}
-          {/*    <td>{size}</td>*/}
-          {/*    <td>{product.store?.name}</td>*/}
-          {/*    <td>*/}
-          {/*      {!!product?.images?.length && (*/}
-          {/*        <div className="product-images">*/}
-          {/*          {images.map((image, index) => (*/}
-          {/*            <div key={image.id} className="image-wrapper">*/}
-          {/*              <img*/}
-          {/*                src={image.url}*/}
-          {/*                alt={`product-image-${index}`}*/}
-          {/*                className="product-image"*/}
-          {/*              />*/}
-          {/*              <div className="image-actions">*/}
-          {/*                <Button*/}
-          {/*                  onClick={() => onDeleteImage(image.id)}*/}
-          {/*                  loading={deletingProduct.includes(image.id)}*/}
-          {/*                >*/}
-          {/*                  Delete*/}
-          {/*                </Button>*/}
-          {/*                <Button onClick={() => updateProduct(image.id)}>*/}
-          {/*                  Update Image*/}
-          {/*                </Button>*/}
-          {/*              </div>*/}
-          {/*            </div>*/}
-          {/*          ))}*/}
-          {/*        </div>*/}
-          {/*      )}*/}
-          {/*    </td>*/}
-          {/*    <td>*/}
-          {/*      {!_.isEmpty(product) && <DiscountProduct product={product}/>}*/}
-          {/*    </td>*/}
-          {/*  </tr>*/}
-          {/*  </tbody>*/}
-          {/*</table>*/}
           <DiscountProduct product={product}/>
           <ReviewSection productId={productId}/>
         </div>

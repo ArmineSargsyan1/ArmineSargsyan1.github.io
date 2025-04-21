@@ -35,7 +35,6 @@
   top: 20px;
   right: 0;
   left: 0;
-  z-index: 9999999999;
 
 }
 
@@ -43,10 +42,18 @@
   margin-left: 60px
 }
 .header__title{
-  margin-left: 150px
+  margin-left: 90px;
+  font-size: 17px;
 }
 
 .main{
   margin-left:0;
 }
+
+.product-image_table {
+  width: 40px;
+  height: 50px;
+}
+
+
 

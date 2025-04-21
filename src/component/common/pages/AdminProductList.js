@@ -1,37 +1,38 @@
-import React, { useEffect, useRef, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useEffect, useRef, useCallback, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   createOrUpdateProduct,
-  deleteProductRequest,
-  fetchProducts,
+  deleteProductRequest, fetchCategoryProducts,
+  fetchProducts, resetProducts,
   setModalInfo,
 } from "../../store/actions/adminProduct";
-import { fetchCategories } from "../../store/actions/adminCategory";
 import _ from "lodash";
 import Loader from "../Loader";
 import AdminProduct from "../AdminProduct";
 import Search from "../Search";
-import AdminMenu from "../AdminMenu";
 import useQuery from "../../../utils/useQuery";
+import loader from "../Loader";
+import Error from "./Error";
+
 
 
 const AdminProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
+  const maxPageCount = useSelector((state) => state.products.products.maxPageCount);
   const loadingProducts = useSelector((state) => state.products.productStatus);
   const modalInfo = useSelector((state) => state.products.modalInfo);
+  const modalInfoStatus = useSelector((state) => state.products.modalInfoStatus);
+
   const modalInfoError = useSelector((state) => state.products.modalInfoErrors);
   const error = useSelector((state) => state.products.error);
+  const message = useSelector((state) => state.products.message);
 
-  const firstLoading = useRef(true);
-  const { query, setQuery } = useQuery();
 
-  const { page } = query;
+  const {query, setQuery} = useQuery();
+
   const timeOut = useRef(null);
 
-  // useEffect(() => {
-  //   dispatch(fetchCategories());
-  // }, [dispatch]);
 
   useEffect(() => {
     if (timeOut.current) {
@@ -44,15 +45,20 @@ const AdminProductList = () => {
       }));
     }, 500);
 
-    firstLoading.current = false;
     return () => {
       clearTimeout(timeOut.current);
+      dispatch(resetProducts())
     };
   }, [query]);
 
-  const handlePageChange = useCallback((newPage) => {
-    setQuery({ ...query, page: newPage });
-  }, [query]);
+
+  useEffect(() => {
+    if (message === "Product updated successfully"
+      || (message === "Product created successfully")
+    ){
+      dispatch(fetchProducts({... query}));
+    }
+  }, [message]);
 
   const onSaveData = async (e) => {
     e.preventDefault();
@@ -63,16 +69,15 @@ const AdminProductList = () => {
     // await dispatch(fetchProducts({
     //   ...query,
     // }));
-    if (_.isEmpty(modalInfoError)) {
+    if (!_.isEmpty(modalInfoError)) {
       await dispatch(fetchProducts({
         ...query,
       }));
 
-      dispatch(setModalInfo({}))
+
     }
+
   };
-
-
 
   const onDeleteProduct = async (productId) => {
     await dispatch(deleteProductRequest(productId));
@@ -80,51 +85,50 @@ const AdminProductList = () => {
       ...query,
     }));
   };
-  console.log(products)
+
 
   return (
     <div className="admin-container">
-
-      {/*<Search query={query} setQuery={setQuery} />*/}
-
-      {firstLoading.current ? (
-        <Loader />
-      ) : (
-        <>
+      <>
           <div className="product-list">
-            {products?.products?.map((prod) => (
-              <AdminProduct
-                key={prod.id}
-                product={prod}
-                query={query}
-                setQuery={setQuery}
-                onDeleteProduct={onDeleteProduct}
-                onSaveData={onSaveData}
-              />
-            ))}
+            {!products.products?.length && loadingProducts
+              ?
+              <Loader
+                height="250"
+                width="100%"
+                count="3"
+                className="product-detail"
+                iCount={9} iHeight={20}
+                iWidth={300}/>
+
+              : products?.products?.map((prod) => (
+                <AdminProduct
+                  product={prod}
+                  onDeleteProduct={onDeleteProduct}
+                  onSaveData={onSaveData}
+                />
+              ))
+            }
+
           </div>
 
-          {/* Pagination */}
-          <div className="pagination">
-            <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
-              Prev
-            </button>
-            <span>{`Page ${page}`}</span>
-            <button
-              onClick={() => handlePageChange(+page + 1)}
-              disabled={page === products.maxPageCount}
-            >
-              Next
-            </button>
-          </div>
-        </>
-      )}
+        <Search
+          query={query}
+          setQuery={setQuery}
+          products={products.products}
+          maxPageCount={maxPageCount}
+        />
 
-      {error && (
-        <div className="error-message">
-          <p>{error}</p>
-        </div>
-      )}
+        {!loadingProducts &&
+          !products?.products?.length &&
+          error &&
+          <Error
+          statusCode={"No Products Found"}
+          message={"Looks like there are no products in this category yet."}
+          icon={true}
+          />
+        }
+      </>
     </div>
   );
 };
