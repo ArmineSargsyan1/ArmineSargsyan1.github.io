@@ -86,7 +86,7 @@ const AdminProductList = () => {
     }));
   };
 
-
+  console.log(products)
   return (
     <div className="admin-container">
       <>

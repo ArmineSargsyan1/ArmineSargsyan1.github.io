@@ -150,10 +150,208 @@
 
 
 
+// import React, {useCallback, useEffect} from 'react';
+// import {useLocation, useNavigate, useParams} from 'react-router-dom';
+// import {useDispatch, useSelector} from 'react-redux';
+// import {
+//   changeModalInfo,
+//   createOrUpdateProduct,
+//   deleteProductRequest,
+//   fetchCategoryProducts, fetchProducts,
+//   resetProducts,
+//   setModalInfo
+// } from "../../store/actions/adminProduct";
+// import _ from "lodash";
+// import useQuery from "../../../utils/useQuery";
+// import Search from "../Search";
+// import Button from "../Button";
+// import Loader from "../Loader";
+// import AdminProduct from "../AdminProduct";
+// import Error from "./Error";
+//
+// const SingleCategoryProduct = () => {
+//
+//   const {categoryId} = useParams();
+//   const dispatch = useDispatch();
+//
+//   const loading = useSelector((state) => state.products.productStatus);
+//
+//   const products = useSelector((state) => state.products.products);
+//
+//   const modalInfo = useSelector((state) => state.products.modalInfo);
+//
+//   const modalInfoStatus = useSelector((state) => state.products.modalInfoStatus);
+//
+//   const message = useSelector((state) => state.products.message);
+//
+//   const error = useSelector((state) => state.products.error);
+//
+//
+//   const {query, setQuery} = useQuery();
+//
+//   const modalInfoError = useSelector((state) => state.products.modalInfoErrors);
+// const location = useLocation()
+// const navigate = useNavigate()
+//
+//
+//   useEffect(() => {
+//
+//     dispatch(fetchCategoryProducts({categoryId, query}));
+//
+//     return()=>{
+//       dispatch(resetProducts())
+//     }
+//   }, [categoryId, query]);
+//
+//   useEffect(() => {
+//     if (message === "Product updated successfully"
+//       || (message === "Product created successfully")
+//     ){
+//       dispatch(fetchCategoryProducts({categoryId, query}));
+//     }
+//   }, [message]);
+//   console.log(products)
+//
+//   const createProduct = useCallback((info) => {
+//     dispatch(setModalInfo(info));
+//
+//   }, [products]);
+//
+//   const onDeleteProduct = async (productId) => {
+//
+//     await dispatch(deleteProductRequest(productId));
+//
+//     await dispatch(fetchCategoryProducts({categoryId, query}));
+//
+//   };
+//
+//
+//
+//   const onSaveData = async (e) => {
+//     e.preventDefault();
+//     await dispatch(createOrUpdateProduct({
+//       product: modalInfo,
+//     }));
+//
+//     // await dispatch(fetchProducts({
+//     //   ...query,
+//     // }));
+//     if (!_.isEmpty(modalInfoError)) {
+//       await dispatch(fetchCategoryProducts({categoryId, page: 1}));
+//
+//
+//        navigate(`/admin/category/${categoryId}`)
+//     }
+//
+//   };
+//
+//   const onAddProduct = () => {
+//     dispatch(setModalInfo({
+//       name: "",
+//       size: "",
+//       price: "",
+//       description: "",
+//       brandName: "",
+//       categoryId,
+//       quantity: "",
+//       productImage: [],
+//       imageId: " ",
+//     }));
+//
+//     //
+//     // createProduct({
+//     //   name: "",
+//     //   size: "",
+//     //   price: "",
+//     //   description: "",
+//     //   brandName: "",
+//     //   categoryId,
+//     //   quantity: "",
+//     //   productImage: [],
+//     //   imageId: " ",
+//     // });
+//   };
+//
+//
+//
+//   console.log(location?.state?.categoryId)
+//   useEffect(() => {
+//     if (location?.state?.categoryId){
+//
+//        onAddProduct()
+//     }
+//   }, []);
+//
+//   console.log(modalInfo,444444444)
+//   return (
+//
+//     <div className="container">
+//       <div>
+//         {loading && !products.products.length ? (
+//           <Loader
+//             height="250"
+//             width="100%"
+//             count="5"
+//             className="product-detail"
+//             iCount={9}
+//             iHeight={20}
+//             iWidth={300}
+//           />
+//         ) : (
+//           <>
+//             {products.products.map((product) =>
+//               !_.isEmpty(product.product) ? (
+//                 <AdminProduct
+//                   key={product.product._id || product.product.id}
+//                   product={product.product}
+//                   onDeleteProduct={onDeleteProduct}
+//                   onSaveData={onSaveData}
+//                 />
+//               ) : null
+//             )}
+//
+//
+//             {!loading &&
+//               !products.products.length &&
+//               error && (
+//                 <Error
+//                   statusCode="No Products Found"
+//                   message="Looks like there are no products in this category yet."
+//                 />
+//               )}
+//             {location?.state?.categoryId && <AdminProduct
+//               product={products.products}
+//               onDeleteProduct={onDeleteProduct}
+//               onSaveData={onSaveData}
+//             />}
+//           </>
+//         )}
+//
+//         <Search
+//           query={query}
+//           setQuery={setQuery}
+//           products={products.products}
+//           maxPageCount={products.maxPageCount}
+//         />
+//       </div>
+//     </div>
+//
+//   );
+// };
+//
+// export default SingleCategoryProduct;
+
+
+
+
+
+
+
 import React, {useCallback, useEffect} from 'react';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {
+  changeModalInfo,
   createOrUpdateProduct,
   deleteProductRequest,
   fetchCategoryProducts, fetchProducts,
@@ -167,6 +365,7 @@ import Button from "../Button";
 import Loader from "../Loader";
 import AdminProduct from "../AdminProduct";
 import Error from "./Error";
+import ProductModalForm from "../ProductModalForm";
 
 const SingleCategoryProduct = () => {
 
@@ -189,8 +388,8 @@ const SingleCategoryProduct = () => {
   const {query, setQuery} = useQuery();
 
   const modalInfoError = useSelector((state) => state.products.modalInfoErrors);
-const location = useLocation()
-const navigate = useNavigate()
+  const location = useLocation()
+  const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -239,13 +438,13 @@ const navigate = useNavigate()
       await dispatch(fetchCategoryProducts({categoryId, page: 1}));
 
 
-       navigate(`/admin/category/${categoryId}`)
+      navigate(`/admin/category/${categoryId}`)
     }
 
   };
 
   const onAddProduct = () => {
-    createProduct({
+    dispatch(setModalInfo({
       name: "",
       size: "",
       price: "",
@@ -255,17 +454,33 @@ const navigate = useNavigate()
       quantity: "",
       productImage: [],
       imageId: " ",
-    });
+    }));
+
+    //
+    // createProduct({
+    //   name: "",
+    //   size: "",
+    //   price: "",
+    //   description: "",
+    //   brandName: "",
+    //   categoryId,
+    //   quantity: "",
+    //   productImage: [],
+    //   imageId: " ",
+    // });
   };
 
 
+
+  console.log(location?.state?.categoryId)
   useEffect(() => {
     if (location?.state?.categoryId){
+
       onAddProduct()
     }
   }, []);
 
-  console.log(query)
+  console.log(modalInfo,444444444)
   return (
 
     <div className="container">
@@ -282,10 +497,9 @@ const navigate = useNavigate()
           />
         ) : (
           <>
-            {products.products.map((product) =>
-              !_.isEmpty(product.product) ? (
+            {products?.products?.map((product) =>
+              !_.isEmpty(product?.product) ? (
                 <AdminProduct
-                  key={product.product._id || product.product.id}
                   product={product.product}
                   onDeleteProduct={onDeleteProduct}
                   onSaveData={onSaveData}
@@ -295,13 +509,15 @@ const navigate = useNavigate()
 
 
             {!loading &&
-              !products.products.length &&
+              !products?.products?.length &&
               error && (
                 <Error
                   statusCode="No Products Found"
                   message="Looks like there are no products in this category yet."
                 />
               )}
+            {location?.state?.categoryId &&
+         <ProductModalForm/>}
           </>
         )}
 
@@ -314,44 +530,6 @@ const navigate = useNavigate()
       </div>
     </div>
 
-
-
-    // <div className="container">
-    //   <div>
-    //
-    //     {!products.products.length && !loading
-    //       ?  <Loader height="250" width="100%" count="5" className="product-detail" iCount={9} iHeight={20} iWidth={300}/>
-    //
-    //       : products.products.map((product) => (
-    //
-    //         !_.isEmpty(product.product)
-    //         &&
-    //         <AdminProduct
-    //           product={product.product}
-    //           onDeleteProduct={onDeleteProduct}
-    //           onSaveData={onSaveData}
-    //         />
-    //
-    //       ))}
-    //
-    //     <Search
-    //       query={query}
-    //       setQuery={setQuery}
-    //       products={products.products}
-    //       maxPageCount={products.maxPageCount}
-    //     />
-    //
-    //     {!loading &&
-    //       !products.products.length &&
-    //       error &&
-    //       <Error
-    //         statusCode={"No Products Found"}
-    //         message={"Looks like there are no products in this category yet."}
-    //         icon={true}
-    //       />
-    //     }
-    //   </div>
-    // </div>
   );
 };
 

@@ -31,7 +31,7 @@ import React from 'react';
 import Modal from './Modal';
 import Button from "./Button";
 
-const ClearCartModal = ({ isOpen, onClose, onConfirm, desc, loading }) => {
+const ClearCartModal = ({ isOpen, onClose, onConfirm, desc, loading, buttonDesc }) => {
   const closeModal = () => {
     if (!loading) {
       onClose();
@@ -48,7 +48,7 @@ const ClearCartModal = ({ isOpen, onClose, onConfirm, desc, loading }) => {
         <h3>{desc}?</h3>
         <div className="modal-actions">
           <Button onClick={onConfirm} className="confirm-btn" loading={loading}>
-            Delete
+            {buttonDesc ? buttonDesc : "Delete" }
           </Button>
           <Button onClick={closeModal} className="cancel-btn">
             Cancel

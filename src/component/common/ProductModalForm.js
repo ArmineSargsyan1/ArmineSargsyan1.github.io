@@ -1,10 +1,18 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import _ from "lodash";
-import {changeModalInfo, createOrUpdateProduct, fetchProducts, setModalInfo} from "../store/actions/adminProduct";
+import {
+  changeModalInfo,
+  createOrUpdateProduct,
+  deleteImageRequest,
+  fetchProducts,
+  setModalInfo
+} from "../store/actions/adminProduct";
 import {useDispatch, useSelector} from "react-redux";
 import Modal from "./Modal";
 import Input from "./Input";
 import Button from "./Button";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPenToSquare, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 
 const formFields = [
@@ -24,6 +32,7 @@ const ProductModalForm = () => {
   const modalInfo = useSelector((state) => state.products.modalInfo);
   const modalInfoError = useSelector((state) => state.products.modalInfoErrors);
   const modalInfoStatus = useSelector((state) => state.products.modalInfoStatus);
+  const  message = useSelector((state) => state.products.message);
 
   const [isClearModalOpen, setIsClearModalOpen] = useState(false);
   const [previewImg, setPreviewImg] = useState([]);
@@ -32,17 +41,59 @@ const ProductModalForm = () => {
 
 
 
-  const onClose = () => {
+  // const onClose = () => {
+  //
+  //   if (_.isEmpty(modalInfoError)){
+  //     setPreviewImg([])
+  //     dispatch(setModalInfo({}));
+  //   }
+  //
+  // };
+  //
+  //
+  // const uploadFile = async ({ target }) => {
+  //   const files = Array.from(target.files);
+  //
+  //   const validFiles = files.filter(file => {
+  //     if (file.size > 1024 * 1024 * 1024) {
+  //       console.log("Image size should be less than 1MB");
+  //       return false;
+  //     } else if (!['image/jpeg', 'image/png', 'image/svg+xml'].includes(file.type)) {
+  //       console.log('Invalid image type. Only JPEG, PNG, and SVG are allowed.');
+  //       return false;
+  //     }
+  //     return true;
+  //   });
+  //
+  //   if (validFiles.length > 0) {
+  //     setProdImage(prev => [...prev, ...validFiles]);
+  //
+  //     const newPreviewUrls = validFiles.map(file => URL.createObjectURL(file));
+  //     setPreviewImg(prev => [...prev, ...newPreviewUrls]);
+  //
+  //     dispatch(changeModalInfo({
+  //       path: 'productImage',
+  //
+  //       value: [...prodImage, ...validFiles],
+  //     }));
+  //   }
+  // };
+  //
+  //
+  const onSaveData = async (e) => {
+    e.preventDefault();
+    console.log(modalInfo,555555555)
+    await dispatch(createOrUpdateProduct({
+      product: modalInfo,
+    }));
 
-    if (_.isEmpty(modalInfoError)){
-      setPreviewImg([])
-      dispatch(setModalInfo({}));
+    if (_.isEmpty(modalInfoError)) {
+      await dispatch(fetchProducts());
+
+      dispatch(setModalInfo({}))
     }
-
   };
-
-
-  const uploadFile = async ({ target }) => {
+  const uploadFile = async ({target}) => {
     const files = Array.from(target.files);
 
     const validFiles = files.filter(file => {
@@ -71,80 +122,224 @@ const ProductModalForm = () => {
   };
 
 
-  const onSaveData = async (e) => {
-    e.preventDefault();
-    console.log(modalInfo,555555555)
-    await dispatch(createOrUpdateProduct({
-      product: modalInfo,
-    }));
+  useEffect(() => {
+    if (message === "Product updated successfully"
+      || (message === "Product created successfully")
+    ){
+      setPreviewImg([])
+      setProdImage([])
+    }
+  }, [message]);
+
+
+  const onClearCancel = () => {
+    setIsClearModalOpen(false);
+  };
+  // const onClearConfirm = async () => {
+  //   await onDeleteProduct(id);
+  //   setIsClearModalOpen(false);
+  // };
+  const onClose = () => {
 
     if (_.isEmpty(modalInfoError)) {
-      await dispatch(fetchProducts());
+      setPreviewImg([])
+      dispatch(setModalInfo({}));
+    }
 
-      dispatch(setModalInfo({}))
+  };
+  const onDeleteImage = (imageId) => {
+    dispatch(deleteImageRequest(imageId));
+  };
+  const onModalClose = () => {
+    if (!loading) {
+      onClose();
     }
   };
 
-
-
-
   return (
-    <Modal isOpen={!_.isEmpty(modalInfo)} onClose={onClose} className="big">
-      <form onSubmit={onSaveData}>
-        {formFields.map((field) => (
-          <div key={field.name} className="form-group">
-            <label htmlFor={field.name}>{field.label}</label>
-            {field.type === "textarea" ? (
-              <textarea
-                id={field.name}
-                name={field.name}
-                value={modalInfo[field.name]}
-                onChange={({ target: { value } }) => dispatch(changeModalInfo({ path: field.name, value }))
-                }
-              />
-            ) : (
-              <Input
-                type={field.type}
-                id={field.name}
-                name={field.name}
-                value={modalInfo[field.name]}
-                onChange={({ target: { value } }) =>
-                  dispatch(changeModalInfo({ path: field.name, value }))
-                }
-              />
-            )}
-            {modalInfoError?.[field.name] && (
-              <div className="validation-info">
-                {modalInfoError[field.name]}
-              </div>
-            )}
-          </div>
-        ))}
+    // <Modal isOpen={!_.isEmpty(modalInfo)} onClose={onClose} className="big">
+    //   <form onSubmit={onSaveData}>
+    //     {formFields.map((field) => (
+    //       <div key={field.name} className="form-group">
+    //         <label htmlFor={field.name}>{field.label}</label>
+    //         {field.type === "textarea" ? (
+    //           <textarea
+    //             id={field.name}
+    //             name={field.name}
+    //             value={modalInfo[field.name]}
+    //             onChange={({ target: { value } }) => dispatch(changeModalInfo({ path: field.name, value }))
+    //             }
+    //           />
+    //         ) : (
+    //           <Input
+    //             type={field.type}
+    //             id={field.name}
+    //             name={field.name}
+    //             value={modalInfo[field.name]}
+    //             onChange={({ target: { value } }) =>
+    //               dispatch(changeModalInfo({ path: field.name, value }))
+    //             }
+    //           />
+    //         )}
+    //         {modalInfoError?.[field.name] && (
+    //           <div className="validation-info">
+    //             {modalInfoError[field.name]}
+    //           </div>
+    //         )}
+    //       </div>
+    //     ))}
+    //
+    //     {/* Image Upload */}
+    //     <div className="form-group">
+    //       <label htmlFor="productImage">Product Images</label>
+    //       <input
+    //         type="file"
+    //         id="productImage"
+    //         name="productImage"
+    //         multiple
+    //         onChange={uploadFile}
+    //       />
+    //       {previewImg.length > 0 && (
+    //         <div className="image-previews">
+    //           {previewImg.map((url, index) => (
+    //             <img key={index} src={url} alt={`preview-${index}`} width="100" />
+    //           ))}
+    //         </div>
+    //       )}
+    //     </div>
+    //
+    //     <Button type="submit" loading={modalInfoStatus}>
+    //       Save
+    //     </Button>
+    //   </form>
+    // </Modal>
 
-        {/* Image Upload */}
-        <div className="form-group">
-          <label htmlFor="productImage">Product Images</label>
-          <input
-            type="file"
-            id="productImage"
-            name="productImage"
-            multiple
-            onChange={uploadFile}
-          />
+
+    <div className="product-form">
+      {<Modal
+        isOpen={!_.isEmpty(modalInfo)}
+        onClose={onModalClose}
+        className="big"
+      >
+        <form onSubmit={onSaveData}>
+          {
+            formFields.map((field) => (
+              <div key={field.name} className="form-group">
+                <label htmlFor={field.name}>{field.label}</label>
+                {field.type === 'textarea' ? (
+                  <textarea
+                    id={field.name}
+                    name={field.name}
+                    value={modalInfo[field.name] || ""}
+                    onChange={({target: {value}}) =>
+                      dispatch(changeModalInfo({path: field.name, value}))
+                    }
+                  />
+                ) : (
+                  <Input
+                    type={field.type}
+                    id={field.name}
+                    name={field.name}
+                    value={modalInfo[field.name] || ""}
+                    onChange={({target: {value}}) =>
+                      dispatch(changeModalInfo({path: field.name, value}))
+                    }
+                  />
+                )}
+                {modalInfoError?.[field.name] && (
+                  <div className="validation-info">{modalInfoError[field.name]}</div>
+                )}
+              </div>
+            ))}
+
+          <div className="image-upload-hint">
+            {!modalInfo.categoryId &&
+              <p className="image-hint-text">
+                Updating an image? Upload your new one first, then click the update button on the image you'd like to
+                replace.
+              </p>
+            }
+            <p className="image-hint-text">
+              Ready to showcase your product? Upload one or more images to get started.
+            </p>
+          </div>
+
+          {/* Upload new images */}
+          <div className="form-group">
+
+            <input
+              type="file"
+              id="productImage"
+              name="productImage"
+              multiple
+              onChange={uploadFile}
+            />
+          </div>
+
+          <div className="image-modal-wrapper">
+
+            {modalInfo?.productIm?.map((image, index) => (
+              <div key={image.id} className="image-modal">
+                <img
+                  src={image.path}
+                  alt={`product-image-${index}`}
+                  className="product-image_modal"
+                />
+
+                {/*<div className="oction__buttons">*/}
+                {/*  <Button*/}
+                {/*    onClick={() => onDeleteImage(image.id)}*/}
+                {/*    loading={deletingProduct.includes(image.id)}*/}
+                {/*    className="oction__delete small"*/}
+                {/*  >*/}
+                {/*    <FontAwesomeIcon*/}
+                {/*      icon={faTrash}*/}
+                {/*      className="oction__delete small"*/}
+                {/*    />*/}
+                {/*  </Button>*/}
+
+                {/*  <Button*/}
+                {/*    onClick={() =>*/}
+                {/*      dispatch(changeModalInfo({path: "imageId", value: image.id}))*/}
+                {/*    }*/}
+                {/*    className="oction__toggle small"*/}
+                {/*    disabled={previewImg.length === 0}*/}
+                {/*    title="Please select a new image before updating."*/}
+
+                {/*  >*/}
+                {/*    <FontAwesomeIcon className="oction__toggle small" icon={faPenToSquare}/>*/}
+                {/*  </Button>*/}
+                {/*</div>*/}
+              </div>
+            ))}
+          </div>
+
+
           {previewImg.length > 0 && (
-            <div className="image-previews">
-              {previewImg.map((url, index) => (
-                <img key={index} src={url} alt={`preview-${index}`} width="100" />
-              ))}
+            <div className="form-group">
+              <label>Preview New Images</label>
+              <div className="image-previews">
+                {previewImg.map((url, index) => (
+                  <img key={index} src={url} alt={`preview-${index}`} width="100"/>
+                ))}
+              </div>
             </div>
           )}
-        </div>
 
-        <Button type="submit" loading={modalInfoStatus}>
-          Save
-        </Button>
-      </form>
-    </Modal>
+          <Button
+            type="submit"
+            disabled={modalInfo.imageId && modalInfo.imageId != " " ? !previewImg.length : !_.isEmpty(modalInfoError)}
+            loading={modalInfoStatus}
+          >
+            Save
+          </Button>
+        </form>
+
+      </Modal>
+      }
+    </div>
+
+
   );
 };
 

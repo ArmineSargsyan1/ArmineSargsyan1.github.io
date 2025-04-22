@@ -955,6 +955,7 @@
 
   import {ReactComponent as Logo} from "../../../assets/image/downArrow.svg";
   import {ReactComponent as UserProfileIcon} from "../../../assets/image/user.svg";
+import {ReactComponent as UserIcon} from "../../../assets/image/user-solid (4).svg";
 
 
   import useQuery from "../../../utils/useQuery";
@@ -1142,13 +1143,16 @@ import Loader from "../Loader";
                   <Notification/>
                   <Link to="/profile" className="user-profile-link">
                     <span className="user-name">{user.firstName} {user.lastName}</span>
-                    {user.avatar?.[0]?.path && (
+                    {user.avatar?.[0]?.path ? (
                       <img
                         src={user.avatar[0].path}
                         alt={`${user.firstName} ${user.lastName}`}
                         // className="user-avatars"
                       />
+                    ) : (
+                      <UserIcon  style={{ borderRadius: "50%", background: "#f0f0f0", padding: "3px" }}/>
                     )}
+
                   </Link>
                 </>
               }
@@ -1223,6 +1227,7 @@ import Loader from "../Loader";
           onClose={closeModal}
           onConfirm={confirmLogout}
           desc={"You're about to sign out. Are you sure you want to continue"}
+          buttonDesc={"Sign out"}
         />
       </header>
   );

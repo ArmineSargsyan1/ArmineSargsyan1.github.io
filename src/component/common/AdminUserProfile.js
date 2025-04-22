@@ -123,7 +123,6 @@ const AdminUserProfile = () => {
     navigate('/login');
   };
 
-  console.log(loading)
   return (
     loading ? (
       <Loader height="600" width="100%" count={1} className="admin-user-profile" />

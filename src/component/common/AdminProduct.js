@@ -2269,7 +2269,7 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
 
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import _ from "lodash";
 import {changeModalInfo, deleteImageRequest, fetchCategoryProducts, setModalInfo} from "../store/actions/adminProduct";
 import Button from "./Button";
@@ -2290,7 +2290,7 @@ const formFields = [
   {label: 'Quantity', name: 'quantity', type: 'text'},
 ];
 
-const AdminProduct = ({product, onDeleteProduct, onSaveData}) => {
+const AdminProduct = ({product, onDeleteProduct, onSaveData, state}) => {
   const {
     id,
     name,
@@ -2305,7 +2305,9 @@ const AdminProduct = ({product, onDeleteProduct, onSaveData}) => {
     discount,
     imageId
   } = product;
+  const location = useLocation()
 
+  console.log(222222222222)
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.products.productStatus);
   const modalInfo = useSelector((state) => state.products.modalInfo);
@@ -2408,7 +2410,7 @@ const AdminProduct = ({product, onDeleteProduct, onSaveData}) => {
     }
   };
 
-
+  console.log(state,7777)
   return (
     <div className="product-detail" key={id}>
       <Link to={`/admin/product/${product.id}`}>
@@ -2474,7 +2476,7 @@ const AdminProduct = ({product, onDeleteProduct, onSaveData}) => {
 
       <div className="product-form">
         {<Modal
-          isOpen={!_.isEmpty(modalInfo)}
+          isOpen={!_.isEmpty(modalInfo) || state}
           onClose={onModalClose}
           className="big"
         >

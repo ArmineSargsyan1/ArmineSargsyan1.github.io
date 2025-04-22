@@ -62,7 +62,7 @@ export const fetchCategoryProducts = createAsyncThunk(
       const { data } = query.search
         ? await Api.searchAdminProduct({ categoryId, page, minPrice, maxPrice, limit, search })
         : await Api.getSingleCategoryProduct({ categoryId, query });
-
+      console.log(data,222222222222)
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue('Error fetching products');
@@ -168,7 +168,7 @@ export const createOrUpdateProduct = createAsyncThunk(
 
         : await Api.updateAdminProduct({formData, id})
 
-      console.log(data)
+      console.log(data,111111111111111111111)
       return {isUpdate: !categoryId, data: !categoryId ? data.product : data.product, message: data.message};
 
 

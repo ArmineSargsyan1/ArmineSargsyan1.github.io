@@ -143,7 +143,7 @@ static async createReview({reviewId, reply}){
 
 
 static async createAdminProduct({formData, categoryId}){
-
+  console.log(8888888888888,"api")
   return await api.post(`admin/product/${categoryId}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
