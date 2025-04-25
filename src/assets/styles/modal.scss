@@ -24,17 +24,11 @@
     margin: 0 auto;
     background-color: #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    border-radius: 5px;
     padding: 20px;
     transition: 0.4s all;
     max-height: calc(100vh - 60px);
-    overflow-y: auto;
-    overflow-x: hidden;
     animation: modalFadeIn 0.3s ease;
-
-    &::-webkit-scrollbar {
-      width: 0;
-    }
 
 
     &.small {

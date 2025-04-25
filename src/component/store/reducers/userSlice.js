@@ -130,8 +130,7 @@ import {
   getUserProfileRequest,
   loginUser,
   setClickedBar,
-  setLogin,
-  logoutUser
+  logoutUser, setFieldValue
 } from '../actions/user';
 import {toast} from "react-toastify";
 
@@ -142,6 +141,7 @@ const initialState = {
   loading: false,
   error: null,
   profile: null,
+  message: ""
 };
 
 export const userSlice = createReducer(initialState, (builder) => {
@@ -154,9 +154,10 @@ export const userSlice = createReducer(initialState, (builder) => {
       state.loading = false;
       state.token = action.payload.token;
     })
-    .addCase(loginUser.rejected, (state, action) => {
+    .addCase(loginUser.rejected, (state, {payload}) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = payload.errors;
+      state.message = payload.message
     })
 
     .addCase(getUserProfileRequest.pending, (state) => {
@@ -174,9 +175,11 @@ export const userSlice = createReducer(initialState, (builder) => {
       state.loading = false
     })
 
-    .addCase(setLogin, (state, { payload }) => {
+    .addCase(setFieldValue, (state, { payload }) => {
       const { path, value } = payload;
       state.user[path] = value;
+      state.error = {}
+      state.message = ""
     })
 
     .addCase(setClickedBar, (state, { payload }) => {

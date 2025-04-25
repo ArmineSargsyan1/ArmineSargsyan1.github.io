@@ -125,7 +125,7 @@ const AdminUserProfile = () => {
 
   return (
     loading ? (
-      <Loader height="600" width="100%" count={1} className="admin-user-profile" />
+      <Loader height="600" width="100%" count={1} className="admin-user-profile" iCount={1}/>
     ) : (
       <div className="admin-user-profile">
         <h2>

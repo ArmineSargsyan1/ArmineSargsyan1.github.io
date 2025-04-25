@@ -73,6 +73,7 @@
       gap: 8px;
 
       &:last-child {
+        margin-top: 20px;
         padding-top: 20px;
       }
     }
@@ -80,7 +81,7 @@
     &-button {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
 
       color: #fff;
       padding: 10px 16px;
@@ -90,11 +91,21 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
 
+      & svg {
+        transition: transform 0.3s ease;
+      }
+
+      &:hover svg {
+        transform: scale(1.2);
+      }
       &:last-child {
-        background-color: #f44336;
+        background-color: #ff5733;
+
 
         &:hover {
-          background-color: darken(#f44336, 7%);
+          background-color: #e84a2f;
+          color: #ffffff;
+          box-shadow: 0 2px 8px #e84a2f;
         }
       }
 

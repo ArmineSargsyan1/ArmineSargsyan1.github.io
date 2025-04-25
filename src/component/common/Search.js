@@ -18,7 +18,7 @@ const Search = ({ query = {}, setQuery , products, maxPageCount}) => {
 
 
   const onPageChange = (selectedItem) => {
-    const selectedPage = selectedItem.selected + 1; // react-paginate uses zero-based index
+    const selectedPage = selectedItem.selected + 1;
     setQuery({
       ...query,
       page: selectedPage,
@@ -68,7 +68,7 @@ const Search = ({ query = {}, setQuery , products, maxPageCount}) => {
       </div>
 
 
-      {products?.length > 0 && maxPageCount > 1 && (
+      {maxPageCount > 1 && (
         <div className="pagination">
           <Pagination
             previousLabel={"<"}

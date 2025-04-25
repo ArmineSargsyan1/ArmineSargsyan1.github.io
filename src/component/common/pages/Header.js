@@ -949,8 +949,6 @@
   import {ReactComponent as Settings} from "../../../assets/image/settings.svg";
   import {ReactComponent as Category} from "../../../assets/image/category.svg";
   import {ReactComponent as AddProducts} from "../../../assets/image/addProducts.svg";
-
-  import {ReactComponent as Login} from "../../../assets/image/login.svg";
   import {ReactComponent as LogOut} from "../../../assets/image/logout.svg";
 
   import {ReactComponent as Logo} from "../../../assets/image/downArrow.svg";
@@ -962,7 +960,7 @@ import {ReactComponent as UserIcon} from "../../../assets/image/user-solid (4).s
   import Input from "../Input";
   import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
   import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-  import {fetchProducts} from "../../store/actions/adminProduct";
+  import {fetchProducts, setModalInfo} from "../../store/actions/adminProduct";
   import {useDispatch, useSelector} from "react-redux";
   import {getUserProfileRequest, logoutUser, setClickedBar} from "../../store/actions/user";
   import Notification from "../Notification";
@@ -1021,7 +1019,6 @@ import Loader from "../Loader";
     const dispatch = useDispatch();
     const clickedBar = useSelector((state) => state.users.clickedBar);
     const user = useSelector((state) => state.users.user);
-    const  token  = useSelector((state) => state.users.token);
 
     const [sidebarWidth, setSidebarWidth] = useState(0);
     const sidebarRef = useRef(null);
@@ -1086,13 +1083,14 @@ import Loader from "../Loader";
 
     const onLogout = () => {
       dispatch(logoutUser());
-      navigate('/login');
+      window.location.reload(true)
     };
 
     const confirmLogout = () => {
       onLogout();
       closeModal();
     };
+
 
     return (
       <header className="header">
@@ -1176,44 +1174,26 @@ import Loader from "../Loader";
                 </NavLink>
               </li>
             ))}
-            <li className="nav__list" key="add-product">
-              <div
-                className="nav__link"
-                style={{cursor: "pointer"}}
-                onClick={() => {
-                  navigate(`/admin/category`, {
-                    state: true
-                  });
-                }}
-              >
-              </div>
-            </li>
 
               <div className="nav__link-buttons">
-                <Button className="nav__link-button" onClick={() => {
+
+                <Button
+                  className="add-product-btn nav"
+                  onClick={() => {
                   navigate(`/admin/category`, {
                     state: true
                   });
+
+
                 }}>
                   <AddProducts/>
                   <span>Add Product</span>
                 </Button>
 
-                {token ? <Button className="nav__link-button" onClick={openModal}>
+                <Button className="nav__link-button" onClick={openModal}>
                   <LogOut className="logout-icon"/>
                   <span>Sign Out</span>
                 </Button>
-
-                  :   <Button
-                    style={{backgroundColor: "limegreen"}}
-                    onClick={() => {navigate(`/login`);}}
-
-                  >
-                    <Login className="logout-icon" style={{marginRight: 20}}/>
-                    <span >Sign in</span>
-                  </Button>
-                }
-
 
               </div>
 

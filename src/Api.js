@@ -111,11 +111,11 @@ static async getSingleCategoryProduct({categoryId, query})
 {
   const {page, limit, search, minPrice, maxPrice} = query
 
-  console.log(page, limit, search, minPrice, maxPrice, "get")
+  console.log(categoryId, "cat",page, limit, search, minPrice, maxPrice, "get")
   return await api.get(`admin/products/${categoryId}`, {
     params: {
       page,
-      limit:2,
+      limit,
       minPrice,
       maxPrice
     },
@@ -162,6 +162,7 @@ static async updateAdminProduct({formData, id,})
 }
 
 static deleteAdminProducts({productId}) {
+  console.log(productId,3333333)
   return api.delete(`admin/product/${productId}`)
 }
 

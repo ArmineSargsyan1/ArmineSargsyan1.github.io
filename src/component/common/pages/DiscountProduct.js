@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import moment from 'moment';
 import { applyDiscountToProduct } from "../../store/actions/adminProduct";
 import { useDispatch } from "react-redux";
-import useQuery from "../../../utils/useQuery";
 import Button from "../Button";
 import _ from "lodash";
 import Modal from "../Modal";
@@ -12,20 +11,16 @@ import DatePiker from "../DatePiker";
 const DiscountProduct = ({ product }) => {
 
   const dispatch = useDispatch();
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [startDate, endDate] = dateRange;
 
-  const { query, setQuery } = useQuery();
-
-  const { startDate, endDate } = query;
   const [discountPercentage, setDiscountPercentage] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const { id, brandName, name, description, images, size, store, price, discount, createdAt, updatedAt } = product;
-
-
+  const { id, price, discount } = product;
 
   const changeDate = (date) => {
-    const [start, end] = date;
-    setQuery({ startDate: start, endDate: end });
+    setDateRange(date);
   };
 
   const handleSubmit = async (e) => {
@@ -54,7 +49,10 @@ const DiscountProduct = ({ product }) => {
   };
 
   const onClose = () => {
-    setDiscountPercentage({});
+    if (!loading){
+      setDiscountPercentage({});
+    }
+
   };
   return (
     <div className="product-discount">

@@ -1,17 +1,15 @@
-import React, {useEffect, useRef, useCallback, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   createOrUpdateProduct,
-  deleteProductRequest, fetchCategoryProducts,
+  deleteProductRequest,
   fetchProducts, resetProducts,
-  setModalInfo,
 } from "../../store/actions/adminProduct";
 import _ from "lodash";
 import Loader from "../Loader";
 import AdminProduct from "../AdminProduct";
 import Search from "../Search";
 import useQuery from "../../../utils/useQuery";
-import loader from "../Loader";
 import Error from "./Error";
 
 
@@ -60,20 +58,17 @@ const AdminProductList = () => {
     }
   }, [message]);
 
+
   const onSaveData = async (e) => {
     e.preventDefault();
     await dispatch(createOrUpdateProduct({
       product: modalInfo,
     }));
 
-    // await dispatch(fetchProducts({
-    //   ...query,
-    // }));
     if (!_.isEmpty(modalInfoError)) {
       await dispatch(fetchProducts({
         ...query,
       }));
-
 
     }
 
@@ -85,8 +80,8 @@ const AdminProductList = () => {
       ...query,
     }));
   };
-
-  console.log(products)
+  console.log(modalInfo,22222)
+  console.log(query)
   return (
     <div className="admin-container">
       <>
@@ -96,9 +91,9 @@ const AdminProductList = () => {
               <Loader
                 height="250"
                 width="100%"
-                count="3"
-                className="product-detail"
-                iCount={9} iHeight={20}
+                count={query.limit || 5}
+                className="product-list"
+                iCount={6} iHeight={20}
                 iWidth={300}/>
 
               : products?.products?.map((prod) => (

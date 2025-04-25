@@ -432,7 +432,7 @@ const Home = () => {
           y: {
             beginAtZero: true,
             ticks: {
-              callback: value => `${value} ₽`
+              callback: value => `${value} $`
             }
           }
         },
@@ -447,8 +447,7 @@ const Home = () => {
       }
     });
   };
-
-  console.log(chartRef)
+  console.log(stats)
   return (
     <div className="dashboard">
       {!clickedBar && (
@@ -494,9 +493,9 @@ const Home = () => {
 
       }
       <div className="chart__wrapper">
-          <div className="chart-container">
-            <canvas ref={chartRef}></canvas>
-          </div>
+        <div className="chart-container">
+          <canvas ref={chartRef}></canvas>
+        </div>
 
         <UserPieChart
           lostUsers={35}
@@ -505,28 +504,56 @@ const Home = () => {
         />
       </div>
 
+      <h3>Detailed Statistics</h3>
+      {stats?.statistics ? (
+        <div className="stats-table">
+          <table>
+            <thead>
+            <tr>
+              <th>Date</th>
+              <th>Total Revenue ($)</th>
+              <th>Total Sales</th>
+            </tr>
+            </thead>
+            <tbody>
+            {stats.statistics.map((stat, index) => (
+              <tr key={index}>
+                <td>{stat.interval}</td>
+                <td>{stat.totalRevenue?.toFixed(2) ?? '—'}</td>
+                <td>{stat.totalSales?.toFixed(2) ?? '—'}</td>
+              </tr>
+            ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <Loader height="25" width="100%" count="4" className="stats-table" iCount={3}/>
+      )}
+
+
+
       <div className="buyers">
         <h3>Buyers</h3>
         {
           loading ? <Loader height="60" width="100%" count="3" className="buyers-list"/>
 
-          : (<div className="buyers-list">
-              {buyers.map((buyer) => (
-                <div key={buyer.id} className="buyer-card">
-                  {buyer.avatar ? (
-                    <img src={buyer.avatar} alt="Avatar" className="buyer-avatar"/>
-                  ) : (
-                    <div className="buyer-avatar"></div>
-                  )}
-                  <div className="buyer-info">
-                    <strong>Email:</strong> {buyer.email}
-                    <p><strong>Total Spent:</strong> {Math.round(buyer.totalSpent)} ₽</p>
-                    <p><strong>Total Quantity:</strong> {buyer.totalQuantity}</p>
+            : (<div className="buyers-list">
+                {buyers.map((buyer) => (
+                  <div key={buyer.id} className="buyer-card">
+                    {buyer.avatar ? (
+                      <img src={buyer.avatar} alt="Avatar" className="buyer-avatar"/>
+                    ) : (
+                      <div className="buyer-avatar"></div>
+                    )}
+                    <div className="buyer-info">
+                      <strong>Email:</strong> {buyer.email}
+                      <p><strong>Total Spent:</strong> {Math.round(buyer.totalSpent)} $</p>
+                      <p><strong>Total Quantity:</strong> {buyer.totalQuantity}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
       </div>
     </div>
   );

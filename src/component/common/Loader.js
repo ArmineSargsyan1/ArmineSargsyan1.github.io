@@ -55,7 +55,7 @@ const Loader = ({ height, width, count, className, iClassname, iCount, iWidth, i
        <div className="skeleton-shimmer"/>
        <div className={`loader-wrapper flex ${iClassname}`} style={{display: "flex"}}>
 
-        {Array.from({length: 10}).map((_, i) => (
+        {Array.from({length: iCount || 2}).map((_, i) => (
           <div
             className="skeleton-block"
             key={i}

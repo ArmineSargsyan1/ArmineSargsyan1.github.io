@@ -54,7 +54,7 @@ const Input = memo (forwardRef((
         </button>
       )}
 
-      {errors && <div className="error" >{errors}</div>}
+      {/*{errors && <div className="error" >{errors}</div>}*/}
 
     </>
 
@@ -63,3 +63,6 @@ const Input = memo (forwardRef((
 
 
 export default Input;
+
+
+

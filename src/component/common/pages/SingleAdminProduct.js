@@ -37,7 +37,6 @@ const SingleAdminProduct = () => {
   const {id,brandName, name, description, images, size, store, price, quantity,} = product
 
 
-
   useEffect(() => {
     dispatch(fetchSingleAdminProduct({productId}));
   }, [ productId, discountDetails]);

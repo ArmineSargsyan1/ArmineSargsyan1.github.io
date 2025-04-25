@@ -55,6 +55,7 @@ export const fetchProducts = createAsyncThunk(
 export const fetchCategoryProducts = createAsyncThunk(
   'adminProduct/fetchCategoryProducts',
   async (payload, thunkAPI) => {
+    console.log(payload,888888888888)
     const { categoryId, query } = payload;
     const { page, limit, search, minPrice, maxPrice } = query;
 
@@ -62,9 +63,9 @@ export const fetchCategoryProducts = createAsyncThunk(
       const { data } = query.search
         ? await Api.searchAdminProduct({ categoryId, page, minPrice, maxPrice, limit, search })
         : await Api.getSingleCategoryProduct({ categoryId, query });
-      console.log(data,222222222222)
       return data;
     } catch (error) {
+      console.log(error)
       return thunkAPI.rejectWithValue('Error fetching products');
     }
   }
@@ -228,6 +229,7 @@ export const deleteProductRequest = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       await Api.deleteAdminProducts({productId: payload});
+      console.log(payload,"aaaaaaaaaa")
       return payload;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.response)
