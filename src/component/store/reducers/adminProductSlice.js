@@ -157,24 +157,54 @@ export const adminProductSlice = createReducer(initialState, (builder) => {
     })
 
 
+    // .addCase(deleteImageRequest.fulfilled, (state, { payload }) => {
+    //   state.deletingProduct = state.deletingProduct.filter((id) => id !== payload);
+    //
+    //   // Update the single product in state
+    //   if (state.modalInfo && state.modalInfo.productIm) {
+    //     const updatedImages = state.modalInfo.productIm.filter((image) => image.id !== payload);
+    //     state.modalInfo = { ...state.modalInfo, productIm: updatedImages };
+    //     // Also update the same product in the products list
+    //
+    //     state.products.products = state.products.products.map((product) =>
+    //       product.id === state.modalInfo.id
+    //         ? { ...product, productImage: updatedImages }
+    //         : product
+    //     );
+    //
+    //   }
+    //
+    // })
+
     .addCase(deleteImageRequest.fulfilled, (state, { payload }) => {
       state.deletingProduct = state.deletingProduct.filter((id) => id !== payload);
 
-      // Update the single product in state
       if (state.modalInfo && state.modalInfo.productIm) {
         const updatedImages = state.modalInfo.productIm.filter((image) => image.id !== payload);
         state.modalInfo = { ...state.modalInfo, productIm: updatedImages };
         // Also update the same product in the products list
 
-        state.products.products = state.products.products.map((product) =>
-          product.id === state.modalInfo.id
-            ? { ...product, productImage: updatedImages }
-            : product
-        );
+        state.products.products = state.products.products.map((item) => {
+          const currentProduct = item.product || item;
+
+          if (currentProduct.id === state.modalInfo.id) {
+            const updatedProduct = {
+              ...currentProduct,
+              productImage: updatedImages,
+            };
+            return item.product ? { product: updatedProduct } : updatedProduct;
+          }
+
+          return item;
+        });
+
 
       }
 
     })
+
+
+
 
     .addCase(deleteImageRequest.rejected, (state, action) => {
       // Handle error

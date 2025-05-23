@@ -55,7 +55,6 @@ export const fetchProducts = createAsyncThunk(
 export const fetchCategoryProducts = createAsyncThunk(
   'adminProduct/fetchCategoryProducts',
   async (payload, thunkAPI) => {
-    console.log(payload,888888888888)
     const { categoryId, query } = payload;
     const { page, limit, search, minPrice, maxPrice } = query;
 
@@ -123,12 +122,14 @@ export const createOrUpdateProduct = createAsyncThunk(
 
     console.log(product,"pppppp")
 
-    const {productIm, ...newProducts } = product;
+
+    const {productIm, categoryId, ...newProducts } = product;
 
 
     const {brandName, description, name, price, size, quantity,  productImage, imageId} = newProducts
 
-    const validationErrors = Utils.isValidateProductData({ brandName, description, name, price, size, quantity });
+    console.log(productImage,9999999)
+    const validationErrors = Utils.isValidateProductData({ brandName, description, name, price, size, quantity, productImage, categoryId});
 
 
     console.log(validationErrors,"valer")
@@ -159,7 +160,7 @@ export const createOrUpdateProduct = createAsyncThunk(
 
 
 
-    const { id, categoryId, ...newProduct } = product;
+    const { id,  ...newProduct } = product;
 
     try {
       const {data} = categoryId

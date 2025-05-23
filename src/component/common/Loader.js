@@ -1,26 +1,3 @@
-// import React from 'react';
-//
-//  const Loader = ({ height, width, count, className }) => {
-//
-//   const itemCount = parseInt(count, 10);
-//   const finalHeight = typeof height === 'string' && !height.includes('px') && !height.includes('%')
-//     ? `${height}px`
-//     : height;
-//
-//   return (
-//     <div className={`loader-wrapper ${className}`}>
-//       {Array.from({ length: itemCount }).map((_, i) => (
-//         <div className="skeleton-block" key={i} style={{ height: finalHeight, width }}>
-//           <div className="skeleton-shimmer" />
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
-//
-// export default Loader;
-
-
 import React from 'react';
 
 const Loader = ({ height, width, count, className, iClassname, iCount, iWidth, iHeight }) => {

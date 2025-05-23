@@ -13,14 +13,12 @@ import useQuery from "../../../utils/useQuery";
 import Error from "./Error";
 
 
-
 const AdminProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const maxPageCount = useSelector((state) => state.products.products.maxPageCount);
   const loadingProducts = useSelector((state) => state.products.productStatus);
   const modalInfo = useSelector((state) => state.products.modalInfo);
-  const modalInfoStatus = useSelector((state) => state.products.modalInfoStatus);
 
   const modalInfoError = useSelector((state) => state.products.modalInfoErrors);
   const error = useSelector((state) => state.products.error);
@@ -54,7 +52,7 @@ const AdminProductList = () => {
     if (message === "Product updated successfully"
       || (message === "Product created successfully")
     ){
-      dispatch(fetchProducts({... query}));
+      dispatch(fetchProducts({...query}));
     }
   }, [message]);
 
@@ -76,12 +74,11 @@ const AdminProductList = () => {
 
   const onDeleteProduct = async (productId) => {
     await dispatch(deleteProductRequest(productId));
-    await dispatch(fetchProducts({
-      ...query,
-    }));
+    await dispatch(fetchProducts({...query,}));
+
   };
-  console.log(modalInfo,22222)
-  console.log(query)
+
+
   return (
     <div className="admin-container">
       <>

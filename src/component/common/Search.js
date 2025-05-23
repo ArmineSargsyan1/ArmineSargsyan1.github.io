@@ -16,7 +16,6 @@ const Search = ({ query = {}, setQuery , products, maxPageCount}) => {
     });
   };
 
-
   const onPageChange = (selectedItem) => {
     const selectedPage = selectedItem.selected + 1;
     setQuery({
@@ -24,7 +23,6 @@ const Search = ({ query = {}, setQuery , products, maxPageCount}) => {
       page: selectedPage,
     });
   };
-
 
 
 
@@ -67,7 +65,6 @@ const Search = ({ query = {}, setQuery , products, maxPageCount}) => {
         </div>
       </div>
 
-
       {maxPageCount > 1 && (
         <div className="pagination">
           <Pagination
@@ -85,9 +82,7 @@ const Search = ({ query = {}, setQuery , products, maxPageCount}) => {
         </div>
 
       )}
-
     </>
-
 
   );
 };

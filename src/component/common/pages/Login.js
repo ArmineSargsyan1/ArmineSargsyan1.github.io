@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect} from 'react';
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import Input from "../Input";
 import {useDispatch, useSelector} from "react-redux";
-import {loginUser, setFieldValue,} from "../../store/actions/user";
+import {loginUser, resetUser, setFieldValue,} from "../../store/actions/user";
 import Button from "../Button";
 
 
@@ -35,6 +35,7 @@ const Login = () => {
   const message = useSelector((state) => state.users.message);
   const token = useSelector((state) => state.users.token);
   const user = useSelector((state) => state.users.user);
+  const isAdmin = useSelector((state) => state.users.isAdmin);
 
 
   const onChange = useCallback((path, value) => {
@@ -48,17 +49,22 @@ const Login = () => {
 
   }
 
+  // useEffect(() => {
+  //   if (!isAdmin){
+  //     dispatch(resetUser())
+  //   }
+  // }, [isAdmin]);
+
   useEffect(() => {
     if (token) {
       navigate("/")
     }
   }, [token]);
 
-    if (token) {
+    if (token && isAdmin) {
       window.location.reload(true)
     }
-
-
+  console.log(user)
   return (
     <>
 
@@ -67,8 +73,7 @@ const Login = () => {
           <form className="login__wrapper-content" onSubmit={onLogin}>
             <h2 className="login__title">Login</h2>
 
-            {fields.map(({ path, type, id, label, placeholder }) =>
-            {
+            {fields.map(({path, type, id, label, placeholder}) => {
               return (
                 <div key={id} className="input__box">
                   <Input
@@ -78,7 +83,9 @@ const Login = () => {
                     label={label}
                     placeholder={placeholder}
                     value={user[path]}
-                    onChange={({ target: { value } }) => onChange(path, value)}
+
+                    // value={isAdmin ? user[path] : ""}
+                    onChange={({target: {value}}) => onChange(path, value)}
                     errors={error?.[path]}
                     className={`login__input ${error?.[path] ? 'error' : ''}`}
                   />
@@ -98,9 +105,14 @@ const Login = () => {
             >
               Login
             </Button>
+            <p className="forgot-form__toggle">
+              Forgot your password? <Link to="/forgot-password">Reset it here</Link>
+            </p>
           </form>
+
         </div>
       </div>
+
     </>
   );
 };

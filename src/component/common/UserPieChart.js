@@ -47,27 +47,6 @@ const UserPieChart = ({ lostUsers, newUsers, currentUsers }) => {
     },
   };
 
-  // const centerTextPlugin = {
-  //   id: 'centerText',
-  //   beforeDraw: (chart) => {
-  //     const { width } = chart;
-  //     const { height } = chart;
-  //     const ctx = chart.ctx;
-  //     ctx.restore();
-  //     const fontSize = (height / 114).toFixed(2);
-  //     ctx.font = `${fontSize}em sans-serif`;
-  //     ctx.textBaseline = 'middle';
-  //
-  //     const text = `${activePercent}%`;
-  //     const textX = Math.round((width - ctx.measureText(text).width) / 2);
-  //     const textY = height / 2;
-  //
-  //     ctx.fillStyle = '#333';
-  //     ctx.fillText(text, textX, textY);
-  //     ctx.save();
-  //   },
-  // };
-
   useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
 
@@ -130,7 +109,10 @@ const UserPieChart = ({ lostUsers, newUsers, currentUsers }) => {
   return (
     <div className="chart__container_circle">
       <h3>Customer</h3>
+      <div className="chart__container-desc">
+
       <canvas ref={chartRef} />
+      </div>
     </div>
   );
 };

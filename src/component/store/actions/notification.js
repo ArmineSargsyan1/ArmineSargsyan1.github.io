@@ -11,7 +11,6 @@ export const loadUnreadNotifications = createAsyncThunk(
     try {
 
       const {data: {notifications}} = await Api.getUnreadNotifications()
-      console.log(notifications,2222)
       return notifications;
 
     } catch (error) {

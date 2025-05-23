@@ -30,9 +30,7 @@
   }
 
   .summary {
-    margin-bottom: 2rem;
     background: #fff;
-    max-width: 300px;
     padding: 1rem 1.5rem;
     border-radius: 0.5rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -40,18 +38,19 @@
       font-size: 1rem;
       margin-top: 10px;
       font-weight: 500;
-
     }
-
   }
+
+
   .summary__group{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.8rem;
+
   }
 
   .chart__wrapper{
-
+    margin-top: 30px;
     display: flex;
     justify-content: space-between;
     gap: 10px;
@@ -59,17 +58,28 @@
   }
 
   .chart-container {
-    min-height: 400px;
-    width: calc(100% - 250px);
+
+    display: flex;
+    gap: 1rem;
     background: #fff;
     padding: 1rem;
     border-radius: 0.5rem;
+    align-items: center;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    margin-bottom: 2rem;
+
+
+
+    //min-height: 400px;
+    width: calc(100% - 250px);
+    //margin-bottom: 2rem;
+
   }
 
+  .stats-title{
+    font-size: 1rem;
+    margin: 20px 0;
+  }
   .stats-table {
-    margin-top: 2rem;
     overflow-x: auto;
   }
 
@@ -94,35 +104,31 @@
 
 
   .chart__container_circle{
-  max-height: 400px;
-  width: 250px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    max-height: 400px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 
 
-  h3 {
-    margin-left: 20px;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #444;
-    margin-top: 20px;
-    letter-spacing: 0.5px;
-  }
-}
-  .buyers {
     h3 {
+      margin-left: 20px;
       font-size: 1.25rem;
-      margin-bottom: 1rem;
+      font-weight: 700;
+      color: #444;
+      margin-top: 20px;
+      letter-spacing: 0.5px;
     }
+  }
+  .buyers {
 
     .buyers-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 0.8rem;
     }
 
     .buyer-card {
@@ -130,7 +136,6 @@
       gap: 1rem;
       background: #fff;
       padding: 1rem;
-      max-width: 300px;
       border-radius: 0.5rem;
       align-items: center;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -141,6 +146,13 @@
         border-radius: 20%;
         background: #ddd;
         object-fit: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &-svg{
+          fill: #8a8e8f;
+        }
       }
 
       .buyer-info {
@@ -155,26 +167,29 @@
     }
   }
   @media (max-width: 767px) {
-  .chart__wrapper {
-    display: block;
-    width: 100%;
-  }
+    .chart__wrapper {
+      display: block;
+      width: 100%;
+    }
     .chart-container,
     .chart__container_circle
     {
       width: 100% !important;
       max-width: 100%;
+      margin-top: 20px;
     }
     .chart__container_circle{
-      padding: 10px 50px;
-
       h3 {
-        margin-left: 0;
+        margin-left: 10px;
         font-size: 1rem;
         margin-top: 10px;
       }
     }
-}
+
+    .chart__container-desc{
+      margin: 0 auto;
+    }
+  }
 }
 
 

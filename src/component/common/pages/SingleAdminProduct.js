@@ -17,22 +17,9 @@ const SingleAdminProduct = () => {
   const {productId} = useParams();
   const dispatch = useDispatch();
 
-
-//discount
-  const deletingProduct = useSelector((state) => state.products.deletingProduct);
-
   const discountDetails = useSelector((state) => state.products.discountDetails);
-  const modalInfo = useSelector((state) => state.products.modalInfo);
-
-  const productStatus = (state) => state.products.productStatus;
-  const selectError = (state) => state.products.error;
-
   const product = useSelector((state) => state.products.product);
   const lo = useSelector((state) => state.products.loading);
-
-
-
-
 
   const {id,brandName, name, description, images, size, store, price, quantity,} = product
 
@@ -40,10 +27,6 @@ const SingleAdminProduct = () => {
   useEffect(() => {
     dispatch(fetchSingleAdminProduct({productId}));
   }, [ productId, discountDetails]);
-
-
-
-
 
   return (
     <>

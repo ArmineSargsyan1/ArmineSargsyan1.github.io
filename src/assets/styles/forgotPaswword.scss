@@ -1,0 +1,65 @@
+.reset-code-section{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.success-message{
+  color: #555555;
+  font-size: 17px;
+  margin: 10px;
+}
+
+.resend-timer-wrapper {
+  background: #454752;
+  min-width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  position: relative;
+  top: 10px;
+
+
+  &-loading {
+    transition: 0.2s;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0 auto;
+    position: absolute;
+    height: 100%;
+    background: $interfaceColor;
+    border-radius: 5px;
+  }
+
+  .resend-code-button {
+    font-family: "PoppinsMedium", sans-serif;
+    margin: 0 auto;
+    z-index: 10;
+  }
+
+
+  .timer-block {
+    transition: 0.5s;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    width: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .clock {
+      font-size: 18px;
+    }
+
+    .span-timer {
+      font-family: "RobotoBold", sans-serif;
+    }
+  }
+}
+

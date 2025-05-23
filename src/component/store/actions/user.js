@@ -20,7 +20,7 @@ export const loginUser = createAsyncThunk(
     if (!password?.trim()) {
       errors.password = 'Password should not be empty.';
     } else if (!Utils.isPassword(password)) {
-      errors.password = 'Password must be 8+ characters and include a number.';
+      errors.password = 'Your password must be at least 8 characters long.';
     }
 
     // Validate email
@@ -37,10 +37,16 @@ export const loginUser = createAsyncThunk(
     try {
       const { data } = await Api.getUser({ user });
 
-      toast.success('Login successful!');
-      localStorage.setItem('token', data.token || '');
+      if (data.isAdmin && !data.superAdmin){
+        toast.success('Login successful!');
+        localStorage.setItem('token', data.token || '');
 
-      return data;
+        return data;
+      }else {
+        toast.error("Invalid email or password")
+        return {message: "Invalid email or password" }
+      }
+
     } catch (err) {
       console.log(err,"hhh")
 
@@ -142,7 +148,29 @@ export const loginUser = createAsyncThunk(
 //   }
 // );
 
-
+export const forgotPassword = createAsyncThunk(
+  "user/forgot-password",
+  async (payload, thunkAPI) => {
+    try {
+      const {data} = await Api.forgotPassword(payload);
+      console.log(data,"forgot")
+      return data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error)
+    }
+  }
+);
+// export const changePasswordUser = createAsyncThunk(
+//   "user/change-password",
+//   async (payload, thunkAPI) => {
+//     try {
+//       const {data} = await api.changePasswordUser(payload);
+//       return data
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error)
+//     }
+//   }
+// );
 
 export const getUserProfileRequest = createAsyncThunk(
   'profile/fetchUserProfile',
@@ -157,3 +185,5 @@ export const setFieldValue = createAction('login/user');
 export const setClickedBar = createAction('clickedBar');
 
 export const logoutUser = createAction('auth/logoutUser');
+
+export const resetUser = createAction('auth/resetUser');

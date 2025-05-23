@@ -246,7 +246,6 @@
 // export default ProductModalForm;
 
 
-
 import React, {useEffect, useState} from "react";
 import _ from "lodash";
 import {
@@ -265,11 +264,11 @@ import {faPenToSquare, faTrash} from "@fortawesome/free-solid-svg-icons";
 import {ReactComponent as UploadIcon} from "../../assets/image/upload.svg";
 
 const formFields = [
-  { label: 'Product Name', name: 'name', type: 'text' },
-  { label: 'Size', name: 'size', type: 'text' },
-  { label: 'Price', name: 'price', type: 'text' },
-  { label: 'Description', name: 'description', type: 'textarea' },
-  { label: 'Brand Name', name: 'brandName', type: 'text' },
+  {label: 'Product Name', name: 'name', type: 'text'},
+  {label: 'Size', name: 'size', type: 'text'},
+  {label: 'Price', name: 'price', type: 'text'},
+  {label: 'Description', name: 'description', type: 'textarea'},
+  {label: 'Brand Name', name: 'brandName', type: 'text'},
   {label: 'Quantity', name: 'quantity', type: 'text'},
 ];
 
@@ -281,7 +280,7 @@ const ProductModalForm = ({onSave}) => {
   const modalInfo = useSelector((state) => state.products.modalInfo);
   const modalInfoError = useSelector((state) => state.products.modalInfoErrors);
   const modalInfoStatus = useSelector((state) => state.products.modalInfoStatus);
-  const  message = useSelector((state) => state.products.message);
+  const message = useSelector((state) => state.products.message);
   const deletingProduct = useSelector((state) => state.products.deletingProduct);
 
   const [previewImg, setPreviewImg] = useState([]);
@@ -322,30 +321,29 @@ const ProductModalForm = ({onSave}) => {
   useEffect(() => {
     if (message === "Product updated successfully"
       || (message === "Product created successfully")
-    ){
+    ) {
       setPreviewImg([])
       setProdImage([])
     }
   }, [message]);
 
 
-
   const onClose = () => {
-     setPreviewImg([])
-      dispatch(setModalInfo({}));
+    setPreviewImg([])
+    dispatch(setModalInfo({}));
   };
   const onDeleteImage = (imageId) => {
     dispatch(deleteImageRequest(imageId));
   };
 
   const onModalClose = () => {
-    if (!loading ) {
+    if (!loading) {
       onClose();
     }
   };
 
 
-  console.log(modalInfo,"mod")
+  console.log(prodImage, "iuiu", previewImg)
   return (
     <div className="product-form">
       {<Modal
@@ -389,9 +387,9 @@ const ProductModalForm = ({onSave}) => {
 
           <div className="image-upload-hint">
             {!modalInfo?.categoryId && !!modalInfo?.productIm?.length && <p className="image-hint-text">
-                Updating an image? Upload your new one first, then click the update button on the image you'd like to
-                replace.
-              </p>
+              Updating an image? Upload your new one first, then click the update button on the image you'd like to
+              replace.
+            </p>
             }
             <p className="image-hint-text">
               Ready to showcase your product? Upload one or more images to get started.
@@ -403,8 +401,8 @@ const ProductModalForm = ({onSave}) => {
 
             <div className={`file-upload-wrapper ${modalInfo?.productImage?.length > 0 ? 'has-image' : ''}`}>
               <label htmlFor="productImage" className="custom-file-label">
-            <UploadIcon/>
-                <span>{modalInfo?.productImage?.length > 0 ? "Change Images" : "Upload Images"}</span>
+                <UploadIcon/>
+                <span>Add New Photos</span>
               </label>
 
               <input
@@ -416,7 +414,8 @@ const ProductModalForm = ({onSave}) => {
                 className="file-input"
               />
             </div>
-
+            {modalInfoError.productImage &&
+              <div className="validation-info">{modalInfoError.productImage}</div>}
           </div>
 
           <div className="image-modal-wrapper">
@@ -442,13 +441,11 @@ const ProductModalForm = ({onSave}) => {
                   </Button>
 
                   <Button
-                    onClick={() =>{
+                    onClick={() => {
                       dispatch(changeModalInfo({
                         path: 'imageId',
                         value: image.id,
                       }));
-
-                      dispatch(changeModalInfo({path: "imageId", value: image.id}))
                     }
                     }
                     className="oction__toggle small"
@@ -457,7 +454,12 @@ const ProductModalForm = ({onSave}) => {
 
                   >
                     {modalInfo?.productImage?.length !== 1
-                      ?  <UploadIcon className="upload-icon small"/>
+
+                      // ?<label htmlFor="productImage">
+                        ?<label htmlFor={!modalInfo?.productImage?.length || modalInfo?.productImage?.length < 2 ? "productImage" : ""}>
+
+                      <UploadIcon className="upload-icon small"/>
+                      </label>
                       : <FontAwesomeIcon className="oction__toggle small" icon={faPenToSquare}/>
                     }
                   </Button>

@@ -1,5 +1,6 @@
 import React from 'react';
-const Button = ({onClick, children, className, type, disabled, loading}) => {
+const Button = ({onClick, children, className, type, disabled, loading, loadingText}) => {
+  console.log(loadingText)
 
   return (
     <button
@@ -9,7 +10,12 @@ const Button = ({onClick, children, className, type, disabled, loading}) => {
       className={`button ${loading ? "loading" : ""} ${className}` }
 
     >
-      {loading ? 'Loading' : children}
+      {/*{loading ? (loadingText || 'Loading') : children}*/}
+      {loading ? (
+        <span style={{ color: 'white' }}>{loadingText || 'Loading'}</span>
+      ) : (
+        children
+      )}
     </button>
 
   );

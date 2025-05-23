@@ -26,6 +26,7 @@ const Input = memo (forwardRef((
     setCurrentType((prev)=> prev === "password" ? "text" : "password")
   },[password]);
 
+  console.log(errors)
   return (
 
     <>

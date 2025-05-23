@@ -30,25 +30,22 @@ export default class Api {
   static getProfile() {
     return api.get("users/profile")
   }
-  //
-  // static async updateUser({data}) {
-  //   console.log(data, "api")
-  //   return api.put("users/update", data, {
-  //     headers: {
-  //       "Content-Type": "multipart/form-data",
-  //       Authorization: localStorage.getItem("token"),
-  //     },
-  //   });
-  // };
-  //
-  //
-  //
-  //
-  // static async updateUserPassword({newPassword}) {
-  //   console.log(newPassword, 66)
-  //   return api.put("users/password", {newPassword});
-  // };
 
+  static forgotPassword({email}) {
+    console.log(email,777777777)
+    return api.post(`/users/forgot/password`, {email});
+  }
+
+
+
+  static updatePassword({newPassword, key}) {
+    console.log(newPassword, key)
+    return api.put(`/users/update/password`, {newPassword, key});
+  }
+
+  static resendCode({email}) {
+    return api.post(`/users/resend-code`, {email});
+  }
 
   ////admin
   static getAdminCategories() {
@@ -56,11 +53,10 @@ export default class Api {
   }
 
   static async getAdminProducts({page, limit, minPrice, maxPrice}) {
-    console.log(page, limit, minPrice, maxPrice, 333333333)
     return await api.get("admin/products", {
       params: {
         page,
-        limit:3,
+        limit,
         minPrice,
         maxPrice
       },
@@ -78,7 +74,6 @@ export default class Api {
   };
 
   static async getAdminBuyersResponse({startDate, endDate}) {
-    console.log(startDate, endDate, 333333333)
     return await api.get(
       "/admin/buyers/",{
         params: {
@@ -89,11 +84,7 @@ export default class Api {
   };
 
 
-// static async searchAdminProduct({page, limit, search, minPrice, maxPrice, categoryId})
-  static async searchAdminProduct({page, limit, search, minPrice, maxPrice, categoryId})
-
-  {
-  console.log(page, limit, search, minPrice, maxPrice, categoryId, "search")
+  static async searchAdminProduct({page, limit, search, minPrice, maxPrice, categoryId}) {
   return await api.get(`admin/search`, {
     params: {
       page,
@@ -111,7 +102,6 @@ static async getSingleCategoryProduct({categoryId, query})
 {
   const {page, limit, search, minPrice, maxPrice} = query
 
-  console.log(categoryId, "cat",page, limit, search, minPrice, maxPrice, "get")
   return await api.get(`admin/products/${categoryId}`, {
     params: {
       page,
@@ -143,7 +133,6 @@ static async createReview({reviewId, reply}){
 
 
 static async createAdminProduct({formData, categoryId}){
-  console.log(8888888888888,"api")
   return await api.post(`admin/product/${categoryId}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -162,13 +151,11 @@ static async updateAdminProduct({formData, id,})
 }
 
 static deleteAdminProducts({productId}) {
-  console.log(productId,3333333)
   return api.delete(`admin/product/${productId}`)
 }
 
 
 static async singleAdminProduct({productId}) {
-  console.log(productId, "api")
   return await api.get(`admin/product/${productId}`,
   );
 };
@@ -197,14 +184,10 @@ static deleteImage({imageId}) {
 
 
   static async markNotificationAsRead({ notificationId }) {
-
-    console.log(notificationId, "noy");
-
     return await api.patch(
       `admin-notification/${notificationId}/read`
     );
   }
-
 
 
 }

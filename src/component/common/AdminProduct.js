@@ -397,7 +397,6 @@ const AdminProduct = ({product, onDeleteProduct, onSaveData, state}) => {
     }));
   };
 
-  console.log(  message)
   const onClearCancel = () => {
     setIsClearModalOpen(false);
   };
@@ -407,7 +406,8 @@ const AdminProduct = ({product, onDeleteProduct, onSaveData, state}) => {
     setIsClearModalOpen(false);
   };
 
-  console.log(product)
+  console.log(productImage,99999999999)
+
   return (
     <div className="product-detail" key={id}>
       <Link to={`/admin/product/${product.id}`}>

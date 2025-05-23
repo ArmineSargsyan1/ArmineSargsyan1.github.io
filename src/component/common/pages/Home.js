@@ -370,6 +370,7 @@ import moment from "moment";
 import UserPieChart from "../UserPieChart";
 import Loader from "../Loader";
 import useQuery from "../../../utils/useQuery";
+import {ReactComponent as UserIcon} from "../../../assets/image/user-solid (4).svg";
 
 const getCurrentMonthStartDate = () => moment().startOf('month').format('YYYY-MM-DD');
 const getCurrentMonthEndDate = () => moment().endOf('month').format('YYYY-MM-DD');
@@ -504,7 +505,7 @@ const Home = () => {
         />
       </div>
 
-      <h3>Detailed Statistics</h3>
+      <h3 className="stats-title">Detailed Statistics</h3>
       {stats?.statistics ? (
         <div className="stats-table">
           <table>
@@ -533,7 +534,7 @@ const Home = () => {
 
 
       <div className="buyers">
-        <h3>Buyers</h3>
+        <h3 className="stats-title">Buyers</h3>
         {
           loading ? <Loader height="60" width="100%" count="3" className="buyers-list"/>
 
@@ -543,7 +544,9 @@ const Home = () => {
                     {buyer.avatar ? (
                       <img src={buyer.avatar} alt="Avatar" className="buyer-avatar"/>
                     ) : (
-                      <div className="buyer-avatar"></div>
+                      <div className="buyer-avatar">
+                        <UserIcon className="buyer-avatar-svg"/>
+                      </div>
                     )}
                     <div className="buyer-info">
                       <strong>Email:</strong> {buyer.email}

@@ -1,3 +1,4 @@
+@import "variables";
 .empty-wrapper {
   display: flex;
   align-items: center;
@@ -45,7 +46,7 @@
 
       .empty-link {
         display: inline-block;
-        background-color: #3f51b5;
+        background-color: $interfaceColor;
         color: white;
         padding: 12px 24px;
         border-radius: 6px;
@@ -55,7 +56,7 @@
         transition: background-color 0.3s ease;
 
         &:hover {
-          background-color: #303f9f;
+          background-color: $interfaceColor;
         }
       }
     }

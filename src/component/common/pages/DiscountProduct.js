@@ -23,7 +23,7 @@ const DiscountProduct = ({ product }) => {
     setDateRange(date);
   };
 
-  const handleSubmit = async (e) => {
+  const onSaveDiscount= async (e) => {
     e.preventDefault();
 
     setLoading(true);
@@ -81,7 +81,7 @@ const DiscountProduct = ({ product }) => {
       }
       <Modal onClose={onClose} isOpen={!_.isEmpty(discountPercentage)} className={"big"}>
       <div className="admin-discount-product">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={onSaveDiscount}>
           <div style={{width: "37%", margin: "0 auto"}}>
             <label htmlFor="discountPercentage">Discount Percentage</label>
             <input
